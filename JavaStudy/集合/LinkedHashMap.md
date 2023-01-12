@@ -12,7 +12,7 @@
 
 ## 集合框架
 
-#### Java中的集合框架 
+#### Java中的集合框架
 
 ArrayList/Vector
 LinkedList
@@ -194,7 +194,7 @@ public V put(K key, V value) {
         Entry<K,V> e = table[bucketIndex];
         table[bucketIndex] = new Entry<>(hash, key, value, e);
         size++;
-    }    
+    }  
 ```
 
 主体的实现都是借助于 HashMap 来完成的，只是对其中的 recordAccess(), addEntry(), createEntry() 进行了重写。
@@ -282,3 +282,46 @@ clear() 清空就要比较简单了：
 
 总的来说 LinkedHashMap 其实就是对 HashMap 进行了拓展，使用了双向链表来保证了顺序性。
 因为是继承与 HashMap 的，所以一些 HashMap 存在的问题 LinkedHashMap 也会存在，比如不支持并发等。
+
+```java
+public static void main(String[] args)
+        {
+        LinkedHashMap<String, String> linkedHashMap =
+        new LinkedHashMap<String, String>(16, 0.75f, true);
+        linkedHashMap.put("111", "111");
+        linkedHashMap.put("222", "222");
+        linkedHashMap.put("333", "333");
+        linkedHashMap.put("444", "444");
+        loopLinkedHashMap(linkedHashMap);
+        linkedHashMap.get("111");
+        loopLinkedHashMap(linkedHashMap);
+        linkedHashMap.put("222", "2222");
+        loopLinkedHashMap(linkedHashMap);
+        }
+
+public static void loopLinkedHashMap(LinkedHashMap<String, String> linkedHashMap)
+        {
+        Set<Map.Entry<String, String>> set = inkedHashMap.entrySet();
+        Iterator<Map.Entry<String, String>> iterator = set.iterator();
+
+        while (iterator.hasNext())
+        {
+        System.out.print(iterator.next() + "\t");
+        }
+        System.out.println();
+        }
+```
+
+注意这里的构造方法要用三个参数那个且最后的要传入true，这样才表示按照访问顺序排序。看一下代码运行结果：
+
+```shell
+111=111    222=222    333=333    444=444  
+222=222    333=333    444=444    111=111  
+333=333    444=444    111=111    222=2222  
+```
+
+代码运行结果证明了两点：
+
+1、LinkedHashMap是有序的(访问有序或写入有序)
+
+2、每次访问一个元素（get或put），被访问的元素都被提到最后面去了

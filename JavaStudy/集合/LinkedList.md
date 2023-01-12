@@ -1,13 +1,17 @@
 ### **Java高级特性增强-集合框架(LinkedList)**
 
 #### **多线程**
+
 ### **集合框架**
+
 ### **NIO**
+
 ### **Java并发容器**
 
+---
 
-* * *
 ## 集合框架
+
 #### Java中的集合框架
 
 ArrayList/Vector
@@ -18,19 +22,24 @@ LinkedHashMap
 ...
 
 #### LinkedList（基于JDK1.8）
+
 ##### LinkedList 定义
+
 **LinkedList 是一个用链表实现的集合，元素有序且可以重复。**
+
 ```java
 public class LinkedList<E>
      extends AbstractSequentialList<E>
      implements List<E>, Deque<E>, Cloneable, java.io.Serializable
 ```
+
 ![img_8.png](img_8.png)
 
 和 ArrayList 集合一样，LinkedList 集合也实现了Cloneable接口和Serializable接口，分别用来支持克隆以及支持序列化。List 接口也不用多说，定义了一套 List 集合类型的方法规范。
 　　注意，相对于 ArrayList 集合，LinkedList 集合多实现了一个 Deque 接口，这是一个双向队列接口，双向队列就是两端都可以进行增加和删除操作。
 
 ##### 字段属性
+
 ```java
 //链表元素（节点）的个数
     transient int size = 0;
@@ -45,7 +54,9 @@ public class LinkedList<E>
      */
     transient Node<E> last;
 ```
+
 注意这里出现了一个 Node 类，这是 LinkedList 类中的一个内部类，其中每一个元素就代表一个 Node 类对象，LinkedList 集合就是由许多个 Node 对象类似于手拉着手构成。
+
 ```java
 private static class Node<E> {
         E item;//实际存储的元素
@@ -60,6 +71,7 @@ private static class Node<E> {
         }
     }
 ```
+
 如下图所示：
 
 ![img_9.png](img_9.png)
@@ -67,6 +79,7 @@ private static class Node<E> {
 上图的 LinkedList 是有四个元素，也就是由 4 个 Node 对象组成，size=4，head 指向第一个elementA,tail指向最后一个节点elementD。
 
 ##### 构造函数
+
 ```java
 public LinkedList() {
     }
@@ -75,12 +88,15 @@ public LinkedList() {
         addAll(c);
     }
 ```
+
 LinkedList 有两个构造函数，第一个是默认的空的构造函数，第二个是将已有元素的集合Collection 的实例添加到 LinkedList 中，调用的是 addAll() 方法，这个方法下面我们会介绍。
 　　注意：LinkedList 是没有初始化链表大小的构造函数，因为链表不像数组，一个定义好的数组是必须要有确定的大小，然后去分配内存空间，而链表不一样，它没有确定的大小，通过指针的移动来指向下一个内存地址的分配。
 
 ##### 添加元素
+
 **addFirst(E e)**
 将指定元素添加到链表头
+
 ```java
 //将指定的元素附加到链表头节点
     public void addFirst(E e) {
@@ -98,8 +114,10 @@ LinkedList 有两个构造函数，第一个是默认的空的构造函数，第
         modCount++;//和ArrayList中一样，iterator和listIterator方法返回的迭代器和列表迭代器实现使用。
     }
 ```
+
 **addLast(E e)和add(E e)**
 将指定元素添加到链表尾
+
 ```java
 //将元素添加到链表末尾
     public void addLast(E e) {
@@ -122,8 +140,10 @@ LinkedList 有两个构造函数，第一个是默认的空的构造函数，第
         modCount++;//和ArrayList中一样，iterator和listIterator方法返回的迭代器和列表迭代器实现使用。
     }
 ```
+
 **add(int index, E element)**
 将指定的元素插入此列表中的指定位置
+
 ```java
 //将指定的元素插入此列表中的指定位置
     public void add(int index, E element) {
@@ -171,12 +191,15 @@ LinkedList 有两个构造函数，第一个是默认的空的构造函数，第
         modCount++;
     }
 ```
+
 addAll(Collection<? extends E> c)
 　　按照指定集合的迭代器返回的顺序，将指定集合中的所有元素追加到此列表的末尾
 
 此方法还有一个 addAll(int index, Collection<? extends E> c)，将集合 c 中所有元素插入到指定索引的位置。其实
 addAll(Collection<? extends E> c) ==  addAll(size, Collection<? extends E> c)
+
 ##### 删除元素
+
 删除元素和添加元素一样，也是通过更改指向上一个节点和指向下一个节点的引用即可.
 **remove()和removeFirst()**
 　　从此列表中移除并返回第一个元素
@@ -189,7 +212,9 @@ addAll(Collection<? extends E> c) ==  addAll(size, Collection<? extends E> c)
 　　此方法本质上和 remove(int index) 没多大区别，通过循环判断元素进行删除，需要注意的是，是删除第一次出现的元素，不是所有的。
 
 ##### 修改元素
+
 通过调用 set(int index, E element) 方法，用指定的元素替换此列表中指定位置的元素。
+
 ```java
 public E set(int index, E element) {
         //判断索引 index >= 0 && index <= size中时抛出IndexOutOfBoundsException异常
@@ -200,8 +225,11 @@ public E set(int index, E element) {
         return oldVal;//返回指定索引位置原来的元素
     }
 ```
+
 这里主要是通过 node(index) 方法获取指定索引位置的节点，然后修改此节点位置的元素即可。
+
 ##### 查找元素
+
 getFirst()
 　　返回此列表中的第一个元素
 getLast()
@@ -212,7 +240,9 @@ indexOf(Object o)
 　　返回此列表中指定元素第一次出现的索引，如果此列表不包含元素，则返回-1。
 
 ##### 遍历集合
+
 **普通for循环**
+
 ```java
 LinkedList<String> linkedList = new LinkedList<>();
 linkedList.add("A");
@@ -223,6 +253,7 @@ for(int i = 0 ; i < linkedList.size() ; i++){
     System.out.print(linkedList.get(i)+" ");//A B C D
 }
 ```
+
 代码很简单，我们就利用 LinkedList 的 get(int index) 方法，遍历出所有的元素。
 　　但是需要注意的是， get(int index) 方法每次都要遍历该索引之前的所有元素，这句话这么理解：
 　　比如上面的一个 LinkedList 集合，我放入了 A,B,C,D是个元素。总共需要四次遍历：
@@ -233,6 +264,7 @@ for(int i = 0 ; i < linkedList.size() ; i++){
 　　这样如果集合元素很多，越查找到后面（当然此处的get方法进行了优化，查找前半部分从前面开始遍历，查找后半部分从后面开始遍历，但是需要的时间还是很多）花费的时间越多。那么如何改进呢？
 
 **迭代器**
+
 ```java
 LinkedList<String> linkedList = new LinkedList<>();
 linkedList.add("A");
@@ -252,7 +284,9 @@ while(it.hasNext()){
     System.out.print(it.next()+" ");//D C B A
 }
 ```
+
 在 LinkedList 集合中也有一个内部类 ListItr，方法实现大体上也差不多，通过移动游标指向每一次要遍历的元素，不用在遍历某个元素之前都要从头开始。其方法实现也比较简单：
+
 ```java
 public ListIterator<E> listIterator(int index) {
         checkPositionIndex(index);
@@ -358,14 +392,18 @@ public ListIterator<E> listIterator(int index) {
         }
     }
 ```
+
 这里需要重点注意的是 modCount 字段，前面我们在增加和删除元素的时候，都会进行自增操作 modCount，这是因为如果想一边迭代，一边用集合自带的方法进行删除或者新增操作，都会抛出异常。（使用迭代器的增删方法不会抛异常）
+
 ```java
 final void checkForComodification() {
             if (modCount != expectedModCount)
                 throw new ConcurrentModificationException();
         }
 ```
+
 比如：
+
 ```java
 LinkedList<String> linkedList = new LinkedList<>();
 linkedList.add("A");
@@ -381,7 +419,9 @@ while(listIt.hasNext()){
     listIt.remove();//这样可以进行删除操作
 }
 ```
+
 迭代器的另一种形式就是使用 foreach 循环，底层实现也是使用的迭代器.
+
 ```java
 LinkedList<String> linkedList = new LinkedList<>();
 linkedList.add("A");
@@ -392,4 +432,3 @@ for(String str : linkedList){
     System.out.print(str + "");
 }
 ```
-
