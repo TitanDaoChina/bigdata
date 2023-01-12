@@ -1,14 +1,18 @@
 ### **Java高级特性增强-集合框架(LinkedHashMap)**
 
 #### **多线程**
+
 ### **集合框架**
+
 ### **NIO**
+
 ### **Java并发容器**
 
-* * *
-## 集合框架
-#### Java中的集合框架
+---
 
+## 集合框架
+
+#### Java中的集合框架 
 
 ArrayList/Vector
 LinkedList
@@ -18,6 +22,7 @@ LinkedHashMap
 ...
 
 #### LinkedHashMap
+
 ##### LinkedHashMap底层分析
 
 众所周知HashMap是一个无序的Map,因为每次根据key的hashcode映射到Entry数组上,所以遍历出来的顺序并不是写入的顺序。
@@ -43,11 +48,13 @@ LinkedHashMap的排序方式有两种：
 
     }
 ```
+
 调试可以看到 map 的组成：
 
 ![img_7.png](img_7.png)
 
 打开源码可以看到：
+
 ```java
     /**
      * The head of the doubly linked list.
@@ -71,6 +78,7 @@ LinkedHashMap的排序方式有两种：
         }
     }  
 ```
+
 其中 Entry 继承于 HashMap 的 Entry，并新增了上下节点的指针，也就形成了双向链表。
 还有一个 header 的成员变量，是这个双向链表的头结点。
 上边的 demo 总结成一张图如下：
@@ -84,6 +92,7 @@ LinkedHashMap的排序方式有两种：
 就是利用了头节点和其余的各个节点之间通过 Entry 中的 after 和 before 指针进行关联。
 
 其中还有一个 accessOrder 成员变量，默认是 false，默认按照插入顺序排序，为 true 时按照访问顺序排序，也可以调用:
+
 ```java
 public LinkedHashMap(int initialCapacity,
                          float loadFactor,
@@ -92,18 +101,23 @@ public LinkedHashMap(int initialCapacity,
         this.accessOrder = accessOrder;
 }
 ```
+
 这个构造方法可以显示的传入 accessOrder。
 
 ##### 构造方法
+
 LinkedHashMap 的构造方法:
+
 ```java
      public LinkedHashMap() {
         super();
         accessOrder = false;
     }
 ```
+
 其实就是调用的 HashMap 的构造方法:
 HashMap 实现:
+
 ```java
 public HashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity < 0)
@@ -121,7 +135,9 @@ public HashMap(int initialCapacity, float loadFactor) {
         init();
     }
 ```
+
 可以看到里面有一个空的 init(), 具体是由 LinkedHashMap 来实现的:
+
 ```java
 @Override
     void init() {
@@ -129,10 +145,13 @@ public HashMap(int initialCapacity, float loadFactor) {
         header.before = header.after = header;
     }
 ```
+
 其实也就是对 header 进行了初始化。
 
 ##### put() 方法
+
 看 LinkedHashMap 的 put() 方法之前先看看 HashMap 的 put 方法:
+
 ```java
 public V put(K key, V value) {
         if (table == EMPTY_TABLE) {
@@ -175,10 +194,12 @@ public V put(K key, V value) {
         Entry<K,V> e = table[bucketIndex];
         table[bucketIndex] = new Entry<>(hash, key, value, e);
         size++;
-    }      
+    }    
 ```
+
 主体的实现都是借助于 HashMap 来完成的，只是对其中的 recordAccess(), addEntry(), createEntry() 进行了重写。
 LinkedHashMap 的实现：
+
 ```java
 //就是判断是否是根据访问顺序排序，如果是则需要将当前这个 Entry 移动到链表的末尾
         void recordAccess(HashMap<K,V> m) {
@@ -191,7 +212,7 @@ LinkedHashMap 的实现：
         }
 
 
-    //调用了 HashMap 的实现，并判断是否需要删除最少使用的 Entry(默认不删除)    
+    //调用了 HashMap 的实现，并判断是否需要删除最少使用的 Entry(默认不删除)  
     void addEntry(int hash, K key, V value, int bucketIndex) {
         super.addEntry(hash, key, value, bucketIndex);
 
@@ -219,8 +240,11 @@ LinkedHashMap 的实现：
             after.before = this;
         }  
 ```
+
 ##### get方法
+
 LinkedHashMap 的 get() 方法也重写了:
+
 ```java
  public V get(Object key) {
         Entry<K,V> e = (Entry<K,V>)getEntry(key);
@@ -245,7 +269,9 @@ LinkedHashMap 的 get() 方法也重写了:
     }
 
 ```
+
 clear() 清空就要比较简单了：
+
 ```java
 //只需要把指针都指向自己即可，原本那些 Entry 没有引用之后就会被 JVM 自动回收。
     public void clear() {
@@ -253,6 +279,6 @@ clear() 清空就要比较简单了：
         header.before = header.after = header;
     }
 ```
+
 总的来说 LinkedHashMap 其实就是对 HashMap 进行了拓展，使用了双向链表来保证了顺序性。
 因为是继承与 HashMap 的，所以一些 HashMap 存在的问题 LinkedHashMap 也会存在，比如不支持并发等。
-
