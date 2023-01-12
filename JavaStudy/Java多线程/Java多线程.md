@@ -105,9 +105,6 @@ private static void implementsCallable() throws ExecutionException, InterruptedE
 
 我们在实际开发环境中，建议使用线程池的方式创建线程。
 
-public class ThreadPool
-{
-private static int POOL_NUM = 10;
 ```shell
 public class ThreadPool
 {
