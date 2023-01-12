@@ -535,7 +535,7 @@ public class HashMapDemo {
         for (java.util.Map.Entry<String, String> entry : entrys) {
             System.out.println(entry.getKey() + "--" + entry.getValue());
         }
-    
+  
         /**
          * HashMap其他常用方法
          */
