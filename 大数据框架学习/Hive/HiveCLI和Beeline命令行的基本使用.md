@@ -2,23 +2,23 @@
 
 <nav>
 <a href="#一Hive-CLI">一、Hive CLI</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-Help">1.1 Help</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-交互式命令行">1.2 交互式命令行</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-执行SQL命令">1.3 执行SQL命令</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-执行SQL脚本">1.4 执行SQL脚本</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-配置Hive变量">1.5 配置Hive变量</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#16-配置文件启动">1.6 配置文件启动</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#17-用户自定义变量">1.7 用户自定义变量</a><br/>
+        <a href="#11-Help">1.1 Help</a><br/>
+        <a href="#12-交互式命令行">1.2 交互式命令行</a><br/>
+        <a href="#13-执行SQL命令">1.3 执行SQL命令</a><br/>
+        <a href="#14-执行SQL脚本">1.4 执行SQL脚本</a><br/>
+        <a href="#15-配置Hive变量">1.5 配置Hive变量</a><br/>
+        <a href="#16-配置文件启动">1.6 配置文件启动</a><br/>
+        <a href="#17-用户自定义变量">1.7 用户自定义变量</a><br/>
 <a href="#二Beeline">二、Beeline </a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-HiveServer2">2.1 HiveServer2</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-Beeline">2.1 Beeline</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-常用参数">2.3 常用参数</a><br/>
+        <a href="#21-HiveServer2">2.1 HiveServer2</a><br/>
+        <a href="#21-Beeline">2.1 Beeline</a><br/>
+        <a href="#23-常用参数">2.3 常用参数</a><br/>
 <a href="#三Hive配置">三、Hive配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-配置文件">3.1 配置文件</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-hiveconf">3.2 hiveconf</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-set">3.3 set</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-配置优先级">3.4 配置优先级</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#35-配置参数">3.5 配置参数</a><br/>
+        <a href="#31-配置文件">3.1 配置文件</a><br/>
+        <a href="#32-hiveconf">3.2 hiveconf</a><br/>
+        <a href="#33-set">3.3 set</a><br/>
+        <a href="#34-配置优先级">3.4 配置优先级</a><br/>
+        <a href="#35-配置参数">3.5 配置参数</a><br/>
 </nav>
 
 ## 一、Hive CLI
@@ -192,18 +192,19 @@ Usage: java org.apache.hive.cli.beeline.BeeLine
 
 在 Hive CLI 中支持的参数，Beeline 都支持，常用的参数如下。更多参数说明可以参见官方文档 [Beeline Command Options](https://cwiki.apache.org/confluence/display/Hive/HiveServer2+Clients#HiveServer2Clients-Beeline%E2%80%93NewCommandLineShell)
 
-| 参数 | 说明 |
-| -------------------------------------- | ------------------------------------------------------------ |
-| **-u \<database URL>**              | 数据库地址                                             |
-| **-n \<username>**                | 用户名                                                       |
-| **-p \<password>**                  | 密码 |
-| **-d \<driver class>**              | 驱动 (可选)                                                   |
-| **-e \<query>**                     | 执行 SQL 命令 |
-| **-f \<file>**                      | 执行 SQL 脚本 |
-| **-i  (or)--init  \<file or files>** | 在进入交互模式之前运行初始化脚本                             |
-| **--property-file \<file>** | 指定配置文件 |
-| **--hiveconf** *property**=**value* | 指定配置属性 |
-| **--hivevar** *name**=**value* | 用户自定义属性，在会话级别有效 |
+
+| 参数                                 | 说明                             |
+| ------------------------------------ | -------------------------------- |
+| **-u \<database URL>**               | 数据库地址                       |
+| **-n \<username>**                   | 用户名                           |
+| **-p \<password>**                   | 密码                             |
+| **-d \<driver class>**               | 驱动 (可选)                      |
+| **-e \<query>**                      | 执行 SQL 命令                    |
+| **-f \<file>**                       | 执行 SQL 脚本                    |
+| **-i  (or)--init  \<file or files>** | 在进入交互模式之前运行初始化脚本 |
+| **--property-file \<file>**          | 指定配置文件                     |
+| **--hiveconf** *property**=**value*  | 指定配置属性                     |
+| **--hivevar** *name**=**value*       | 用户自定义属性，在会话级别有效   |
 
 示例： 使用用户名和密码连接 Hive
 
@@ -211,7 +212,6 @@ Usage: java org.apache.hive.cli.beeline.BeeLine
 $ beeline -u jdbc:hive2://localhost:10000  -n username -p password 
 ```
 
-​
 
 ## 三、Hive配置
 
@@ -222,7 +222,6 @@ $ beeline -u jdbc:hive2://localhost:10000  -n username -p password
 方式一为使用配置文件，使用配置文件指定的配置是永久有效的。Hive 有以下三个可选的配置文件：
 
 + hive-site.xml ：Hive 的主要配置文件；
-
 + hivemetastore-site.xml： 关于元数据的配置；
 + hiveserver2-site.xml：关于 HiveServer2 的配置。
 
@@ -261,10 +260,9 @@ No rows affected (0.025 seconds)
 
 ### 3.4 配置优先级
 
-配置的优先顺序如下 (由低到高)：  
-`hive-site.xml` - >` hivemetastore-site.xml `- > `hiveserver2-site.xml` - >` -- hiveconf`- > `set`
+配置的优先顺序如下 (由低到高)：
+`hive-site.xml` - >`hivemetastore-site.xml`- > `hiveserver2-site.xml` - >` -- hiveconf`- > `set`
 
 ### 3.5 配置参数
 
 Hive 可选的配置参数非常多，在用到时查阅官方文档即可[AdminManual Configuration](https://cwiki.apache.org/confluence/display/Hive/AdminManual+Configuration)
-
