@@ -26,7 +26,7 @@ LinkedHashMap
 
 HashSet 是一个不允许存储重复元素的集合，它的实现比较简单，只要理解了 HashMap，HashSet就水到渠成了。
 
-![img_5.png](img_5.png)
+![img_5.png](resources/img_5.png)
 
 从图中可以看出：
 

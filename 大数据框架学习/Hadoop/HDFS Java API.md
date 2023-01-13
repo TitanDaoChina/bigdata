@@ -3,20 +3,20 @@
 <nav>
 <a href="#一-简介">一、 简介</a><br/>
 <a href="#二API的使用">二、API的使用</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-FileSystem">2.1 FileSystem</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-创建目录">2.2 创建目录</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-创建指定权限的目录">2.3 创建指定权限的目录</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-创建文件并写入内容">2.4 创建文件，并写入内容</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#25-判断文件是否存在">2.5 判断文件是否存在</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#26-查看文件内容">2.6 查看文件内容</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#27-文件重命名">2.7 文件重命名</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#28-删除目录或文件">2.8 删除目录或文件</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#29-上传文件到HDFS">2.9 上传文件到HDFS</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#210-上传大文件并显示上传进度">2.10 上传大文件并显示上传进度</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#211-从HDFS上下载文件">2.11 从HDFS上下载文件</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#212-查看指定目录下所有文件的信息">2.12 查看指定目录下所有文件的信息</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#213-递归查看指定目录下所有文件的信息">2.13 递归查看指定目录下所有文件的信息</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#214-查看文件的块信息">2.14 查看文件的块信息</a><br/>
+        <a href="#21-FileSystem">2.1 FileSystem</a><br/>
+        <a href="#22-创建目录">2.2 创建目录</a><br/>
+        <a href="#23-创建指定权限的目录">2.3 创建指定权限的目录</a><br/>
+        <a href="#24-创建文件并写入内容">2.4 创建文件，并写入内容</a><br/>
+        <a href="#25-判断文件是否存在">2.5 判断文件是否存在</a><br/>
+        <a href="#26-查看文件内容">2.6 查看文件内容</a><br/>
+        <a href="#27-文件重命名">2.7 文件重命名</a><br/>
+        <a href="#28-删除目录或文件">2.8 删除目录或文件</a><br/>
+        <a href="#29-上传文件到HDFS">2.9 上传文件到HDFS</a><br/>
+        <a href="#210-上传大文件并显示上传进度">2.10 上传大文件并显示上传进度</a><br/>
+        <a href="#211-从HDFS上下载文件">2.11 从HDFS上下载文件</a><br/>
+        <a href="#212-查看指定目录下所有文件的信息">2.12 查看指定目录下所有文件的信息</a><br/>
+        <a href="#213-递归查看指定目录下所有文件的信息">2.13 递归查看指定目录下所有文件的信息</a><br/>
+        <a href="#214-查看文件的块信息">2.14 查看文件的块信息</a><br/>
 </nav>
 
 ## 一、 简介
@@ -69,8 +69,6 @@
 </project>
 ```
 
-
-
 ## 二、API的使用
 
 ### 2.1 FileSystem
@@ -105,8 +103,6 @@ public void destroy() {
 }
 ```
 
-
-
 ### 2.2 创建目录
 
 支持递归创建目录：
@@ -117,8 +113,6 @@ public void mkDir() throws Exception {
     fileSystem.mkdirs(new Path("/hdfs-api/test0/"));
 }
 ```
-
-
 
 ### 2.3 创建指定权限的目录
 
@@ -131,8 +125,6 @@ public void mkDirWithPermission() throws Exception {
             new FsPermission(FsAction.READ_WRITE, FsAction.READ, FsAction.READ));
 }
 ```
-
-
 
 ### 2.4 创建文件，并写入内容
 
@@ -151,8 +143,6 @@ public void create() throws Exception {
 }
 ```
 
-
-
 ### 2.5 判断文件是否存在
 
 ```java
@@ -162,8 +152,6 @@ public void exist() throws Exception {
     System.out.println(exists);
 }
 ```
-
-
 
 ### 2.6 查看文件内容
 
@@ -206,8 +194,6 @@ private static String inputStreamToString(InputStream inputStream, String encode
 }
 ```
 
-
-
 ### 2.7 文件重命名
 
 ```java
@@ -219,8 +205,6 @@ public void rename() throws Exception {
     System.out.println(result);
 }
 ```
-
-
 
 ### 2.8 删除目录或文件
 
@@ -236,8 +220,6 @@ public void delete() throws Exception {
 }
 ```
 
-
-
 ### 2.9 上传文件到HDFS
 
 ```java
@@ -249,8 +231,6 @@ public void copyFromLocalFile() throws Exception {
     fileSystem.copyFromLocalFile(src, dst);
 }
 ```
-
-
 
 ### 2.10 上传大文件并显示上传进度
 
@@ -278,8 +258,6 @@ public void copyFromLocalFile() throws Exception {
     }
 ```
 
-
-
 ### 2.11 从HDFS上下载文件
 
 ```java
@@ -297,8 +275,6 @@ public void copyToLocalFile() throws Exception {
     fileSystem.copyToLocalFile(false, src, dst, true);
 }
 ```
-
-
 
 ### 2.12 查看指定目录下所有文件的信息
 
@@ -326,8 +302,6 @@ permission=rwxr-xr-x;
 isSymlink=false
 }
 ```
-
-
 
 ### 2.13 递归查看指定目录下所有文件的信息
 
@@ -357,8 +331,6 @@ permission=rw-r--r--;
 isSymlink=false}
 ```
 
-
-
 ### 2.14 查看文件的块信息
 
 ```java
@@ -380,4 +352,3 @@ public void getFileBlockLocations() throws Exception {
 ```
 
 这里我上传的文件只有 57M(小于 128M)，且程序中设置了副本系数为 1，所有只有一个块信息。
-

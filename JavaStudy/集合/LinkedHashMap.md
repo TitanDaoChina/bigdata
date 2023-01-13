@@ -51,7 +51,7 @@ LinkedHashMap的排序方式有两种：
 
 调试可以看到 map 的组成：
 
-![img_7.png](img_7.png)
+![img_7.png](resources/img_7.png)
 
 打开源码可以看到：
 
@@ -83,7 +83,7 @@ LinkedHashMap的排序方式有两种：
 还有一个 header 的成员变量，是这个双向链表的头结点。
 上边的 demo 总结成一张图如下：
 
-![img_6.png](img_6.png)
+![img_6.png](resources/img_6.png)
 
 第一个类似于 HashMap 的结构，利用 Entry 中的 next 指针进行关联。
 

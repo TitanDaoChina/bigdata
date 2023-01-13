@@ -33,7 +33,7 @@ public class LinkedList<E>
      implements List<E>, Deque<E>, Cloneable, java.io.Serializable
 ```
 
-![img_8.png](img_8.png)
+![img_8.png](resources/img_8.png)
 
 和 ArrayList 集合一样，LinkedList 集合也实现了Cloneable接口和Serializable接口，分别用来支持克隆以及支持序列化。List 接口也不用多说，定义了一套 List 集合类型的方法规范。
 　　注意，相对于 ArrayList 集合，LinkedList 集合多实现了一个 Deque 接口，这是一个双向队列接口，双向队列就是两端都可以进行增加和删除操作。
@@ -74,7 +74,7 @@ private static class Node<E> {
 
 如下图所示：
 
-![img_9.png](img_9.png)
+![img_9.png](resources/img_9.png)
 
 上图的 LinkedList 是有四个元素，也就是由 4 个 Node 对象组成，size=4，head 指向第一个elementA,tail指向最后一个节点elementD。
 
