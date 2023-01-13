@@ -55,7 +55,7 @@ usage: hive
 hive -e 'select * from emp';
 ```
 
-![img_2.png](img_2.png)
+![img_2.png](resources/img_2.png)
 
 ### 1.4 执行SQL脚本
 
@@ -127,7 +127,7 @@ hive >  select ${hivevar:j} from emp;
 
 结果如下：
 
-![img_3.png](img_3.png)
+![img_3.png](resources/img_3.png)
 
 ## 二、Beeline
 
