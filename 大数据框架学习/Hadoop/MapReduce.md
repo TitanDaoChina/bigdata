@@ -29,7 +29,7 @@ MapReduce 作业通过将输入的数据集拆分为独立的块，这些块由 
 
 这里以词频统计为例进行说明，MapReduce 处理的流程如下：
 
-![img_12.png](img_12.png)
+![img_12.png](resources/img_12.png)
 
 1. **input** : 读取文本文件；
 2. **splitting** : 将文件按照行进行拆分，此时得到的 `K1` 行数，`V1` 表示对应行的文本内容；
@@ -41,7 +41,7 @@ MapReduce 编程模型中 `splitting` 和 `shuffing` 操作都是由框架实现
 
 ## 三、combiner & partitioner
 
-![img_13.png](img_13.png)
+![img_13.png](resources/img_13.png)
 
 ### 3.1 InputFormat & RecordReaders
 
@@ -57,11 +57,11 @@ MapReduce 编程模型中 `splitting` 和 `shuffing` 操作都是由框架实现
 
 不使用 combiner 的情况：
 
-![img_14.png](img_14.png)
+![img_14.png](resources/img_14.png)
 
 使用 combiner 的情况：
 
-![img_15.png](img_15.png)
+![img_15.png](resources/img_15.png)
 
 可以看到使用 combiner 的时候，需要传输到 reducer 中的数据由 12keys，降低到 10keys。降低的幅度取决于你 keys 的重复率，下文词频统计案例会演示用 combiner 降低数百倍的传输量。
 
@@ -124,7 +124,7 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
 
 `WordCountMapper` 对应下图的 Mapping 操作：
 
-![img_16.png](img_16.png)
+![img_16.png](resources/img_16.png)
 
 `WordCountMapper` 继承自 `Mappe` 类，这是一个泛型类，定义如下：
 
@@ -162,7 +162,7 @@ public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritab
 
 如下图，`shuffling` 的输出是 reduce 的输入。这里的 key 是每个单词，values 是一个可迭代的数据类型，类似 `(1,1,1,...)`。
 
-![img_17.png](img_17.png)
+![img_17.png](resources/img_17.png)
 
 ### 4.4 WordCountApp
 
@@ -265,7 +265,7 @@ hadoop fs -ls /wordcount/output/WordCountApp
 hadoop fs -cat /wordcount/output/WordCountApp/part-r-00000
 ```
 
-![img_18.png](img_18.png)
+![img_18.png](resources/img_18.png)
 
 ## 五、词频统计案例进阶之Combiner
 
@@ -284,11 +284,11 @@ job.setCombinerClass(WordCountReducer.class);
 
 没有加入 `combiner` 的打印日志：
 
-![img_19.png](img_19.png)
+![img_19.png](resources/img_19.png)
 
 加入 `combiner` 后的打印日志如下：
 
-![img_20.png](img_20.png)
+![img_20.png](resources/img_20.png)
 
 这里我们只有一个输入文件并且小于 128M，所以只有一个 Map 进行处理。可以看到经过 combiner 后，records 由 `3519` 降低为 `6`(样本中单词种类就只有 6 种)，在这个用例中 combiner 就能极大地降低需要传输的数据量。
 
@@ -337,4 +337,4 @@ job.setNumReduceTasks(WordCountDataUtils.WORD_LIST.size());
 
 执行结果如下，分别生成 6 个文件，每个文件中为对应单词的统计结果：
 
-![img_21.png](img_21.png)
+![img_21.png](resources/img_21.png)

@@ -31,7 +31,7 @@
 
 ## 二、HDFS 设计原理
 
-![img.png](img.png)
+![img.png](resources/img.png)
 
 ### 2.1 HDFS 架构
 
@@ -48,7 +48,7 @@ HDFS 的 `文件系统命名空间` 的层次结构与大多数文件系统类�
 
 由于 Hadoop 被设计运行在廉价的机器上，这意味着硬件是不可靠的，为了保证容错性，HDFS 提供了数据复制机制。HDFS 将每一个文件存储为一系列**块**，每个块由多个副本来保证容错，块的大小和复制因子可以自行配置（默认情况下，块大小是 128M，默认复制因子是 3）。
 
-![img_1.png](img_1.png)
+![img_1.png](resources/img_1.png)
 
 ### 2.4 数据复制的实现原理
 
@@ -56,7 +56,7 @@ HDFS 的 `文件系统命名空间` 的层次结构与大多数文件系统类�
 
 在写入程序位于 `datanode` 上时，就优先将写入文件的一个副本放置在该 `datanode` 上，否则放在随机 `datanode` 上。之后在另一个远程机架上的任意一个节点上放置另一个副本，并在该机架上的另一个节点上放置最后一个副本。此策略可以减少机架间的写入流量，从而提高写入性能。
 
-![img_2.png](img_2.png)
+![img_2.png](resources/img_2.png)
 
 如果复制因子大于 3，则随机确定第 4 个和之后副本的放置位置，同时保持每个机架的副本数量低于上限，上限值通常为 `（复制系数 - 1）/机架数量 + 2`，需要注意的是不允许同一个 `dataNode` 上具有同一个块的多个副本。
 
@@ -110,30 +110,30 @@ HDFS 具有良好的跨平台移植性，这使得其他大数据计算框架都
 
 ### 1. HDFS写数据原理
 
-![img_3.png](img_3.png)
+![img_3.png](resources/img_3.png)
 
-![img_4.png](img_4.png)
+![img_4.png](resources/img_4.png)
 
-![img_5.png](img_5.png)
+![img_5.png](resources/img_5.png)
 
 ### 2. HDFS读数据原理
 
-![img_6.png](img_6.png)
+![img_6.png](resources/img_6.png)
 
 ### 3. HDFS故障类型和其检测方法
 
-![img_7.png](img_7.png)
+![img_7.png](resources/img_7.png)
 
-![img_8.png](img_8.png)
+![img_8.png](resources/img_8.png)
 
 **第二部分：读写故障的处理**
 
-![img_9.png](img_9.png)
+![img_9.png](resources/img_9.png)
 
 **第三部分：DataNode 故障处理**
 
-![img_10.png](img_10.png)
+![img_10.png](resources/img_10.png)
 
 **副本布局策略**：
 
-![img_11.png](img_11.png)
+![img_11.png](resources/img_11.png)

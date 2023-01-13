@@ -11,7 +11,7 @@ MapReduce是一种非常简单又非常强大的编程模型。
 我们以WordCount程序为例。WordCount主要解决文本处理中的词频统计问题，就是统计文本中每一个单词出现的次数。如果只是统计一篇文章的词频，几十K到几M的数据，那么写一个程序，将数据读入内存，建一个Hash表记录每个词出现的次数就可以了，如下图。
 
 
-![img_26.png](img_26.png)
+![img_26.png](resources/img_26.png)
 
 但是如果想统计全世界互联网所有网页（数万亿计）的词频数（这正是google这样的搜索引擎典型需求），你不可能写一个程序把全世界的网页都读入内存，这时候就需要用MapReduce编程来解决。
 
@@ -71,7 +71,7 @@ reduce函数的计算过程就是，将这个集合里的1求和，再将单词�
 
 假设有两个block的文本数据需要进行词频统计，MapReduce计算过程如下图。
 
-![img_27.png](img_27.png)
+![img_27.png](resources/img_27.png)
 
 ### MapReduce计算过程
 
@@ -89,7 +89,7 @@ reduce函数的计算过程就是，将这个集合里的1求和，再将单词�
 * 这两个关键问题正好对应文章中“MapReduce计算过程”一图中两处“MapReduce框架处理”。
 
 
-![img_28.png](img_28.png)
+![img_28.png](resources/img_28.png)
 
 我们先看下MapReduce是如何启动处理一个大数据计算应用作业的。
 
@@ -106,7 +106,7 @@ reduce函数的计算过程就是，将这个集合里的1求和，再将单词�
 如下图所示。
 
 
-![img_29.png](img_29.png)
+![img_29.png](resources/img_29.png)
 
 具体作业启动和计算过程如下：
 

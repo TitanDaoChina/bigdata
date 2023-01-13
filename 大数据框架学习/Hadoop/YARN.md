@@ -18,12 +18,12 @@
 
 **Apache YARN** (Yet Another Resource Negotiator)  是 hadoop 2.0 引入的集群资源管理系统。用户可以将各种服务框架部署在 YARN 上，由 YARN 进行统一地管理和资源分配。
 
-![img_22.png](img_22.png)
+![img_22.png](resources/img_22.png)
 
 
 ## 二、YARN架构
 
-![img_23.png](img_23.png)
+![img_23.png](resources/img_23.png)
 
 ### 1. ResourceManager
 
@@ -56,7 +56,7 @@
 
 ## 三、YARN工作原理简述
 
-![img_24.png](img_24.png)
+![img_24.png](resources/img_24.png)
 
 1. `Client` 提交作业到 YARN 上；
 
@@ -70,7 +70,7 @@
 
 ## 四、YARN工作原理详述
 
-![img_25.png](img_25.png)
+![img_25.png](resources/img_25.png)
 
 
 #### 1. 作业提交
