@@ -3,22 +3,22 @@
 <nav>
 <a href="#一Phoenix简介">一、Phoenix简介</a><br/>
 <a href="#二Phoenix安装">二、Phoenix安装</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-下载并解压">2.1 下载并解压</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-拷贝Jar包">2.2 拷贝Jar包</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-重启-Region-Servers">2.3 重启 Region Servers</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-启动Phoenix">2.4 启动Phoenix</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#25-启动结果">2.5 启动结果</a><br/>
+    <a href="#21-下载并解压">2.1 下载并解压</a><br/>
+    <a href="#22-拷贝Jar包">2.2 拷贝Jar包</a><br/>
+    <a href="#23-重启-Region-Servers">2.3 重启 Region Servers</a><br/>
+    <a href="#24-启动Phoenix">2.4 启动Phoenix</a><br/>
+    <a href="#25-启动结果">2.5 启动结果</a><br/>
 <a href="#三Phoenix-简单使用">三、Phoenix 简单使用</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-创建表">3.1 创建表</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-插入数据">3.2 插入数据</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-修改数据">3.3 修改数据</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-删除数据">3.4 删除数据</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#35-查询数据">3.5 查询数据</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#36-退出命令">3.6 退出命令</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#37-扩展">3.7 扩展</a><br/>
+    <a href="#31-创建表">3.1 创建表</a><br/>
+    <a href="#32-插入数据">3.2 插入数据</a><br/>
+    <a href="#33-修改数据">3.3 修改数据</a><br/>
+    <a href="#34-删除数据">3.4 删除数据</a><br/>
+    <a href="#35-查询数据">3.5 查询数据</a><br/>
+    <a href="#36-退出命令">3.6 退出命令</a><br/>
+    <a href="#37-扩展">3.7 扩展</a><br/>
 <a href="#四Phoenix-Java-API">四、Phoenix Java API</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-引入Phoenix-core-JAR包">4.1 引入Phoenix core JAR包</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-简单的Java-API实例">4.2 简单的Java API实例</a><br/>
+    <a href="#41-引入Phoenix-core-JAR包">4.1 引入Phoenix core JAR包</a><br/>
+    <a href="#42-简单的Java-API实例">4.2 简单的Java API实例</a><br/>
 </nav>
 
 ## 一、Phoenix简介
@@ -138,7 +138,6 @@ DELETE FROM us_population WHERE city='Dallas';
 
 ![img_31.png](resources/img_31.png)
 
-
 ### 3.5 查询数据
 
 ```sql
@@ -156,23 +155,15 @@ ORDER BY sum(population) DESC;
 !quit
 ```
 
-
-
 ### 3.7 扩展
 
 从上面的操作中可以看出，Phoenix 支持大多数标准的 SQL 语法。关于 Phoenix 支持的语法、数据类型、函数、序列等详细信息，因为涉及内容很多，可以参考其官方文档，官方文档上有详细的说明：
 
 + **语法 (Grammar)** ：https://phoenix.apache.org/language/index.html
-
 + **函数 (Functions)** ：http://phoenix.apache.org/language/functions.html
-
 + **数据类型 (Datatypes)** ：http://phoenix.apache.org/language/datatypes.html
-
 + **序列 (Sequences)** :http://phoenix.apache.org/sequences.html
-
 + **联结查询 (Joins)** ：http://phoenix.apache.org/joins.html
-
-
 
 ## 四、Phoenix Java API
 
@@ -237,4 +228,3 @@ public class PhoenixJavaApi {
 ![img_34.png](resources/img_34.png)
 
 实际的开发中我们通常都是采用第三方框架来操作数据库，如 `mybatis`，`Hibernate`，`Spring Data` 等。关于 Phoenix 与这些框架的整合步骤参见下一篇文章：[Spring/Spring Boot + Mybatis + Phoenix](https://github.com/heibaiying/BigData-Notes/blob/master/notes/Spring+Mybtais+Phoenix整合.md)
-

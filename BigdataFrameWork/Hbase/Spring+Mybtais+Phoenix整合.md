@@ -3,19 +3,19 @@
 <nav>
 <a href="#一前言">一、前言</a><br/>
 <a href="#二Spring-+-Mybatis-+-Phoenix">二、Spring + Mybatis + Phoenix</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-项目结构">2.1 项目结构</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-主要依赖">2.2 主要依赖</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23--数据库配置文件">2.3  数据库配置文件</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24--配置数据源和会话工厂">2.4  配置数据源和会话工厂</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#25-Mybtais参数配置">2.5 Mybtais参数配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#26-查询接口">2.6 查询接口</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#27-单元测试">2.7 单元测试</a><br/>
+    <a href="#21-项目结构">2.1 项目结构</a><br/>
+    <a href="#22-主要依赖">2.2 主要依赖</a><br/>
+    <a href="#23--数据库配置文件">2.3  数据库配置文件</a><br/>
+    <a href="#24--配置数据源和会话工厂">2.4  配置数据源和会话工厂</a><br/>
+    <a href="#25-Mybtais参数配置">2.5 Mybtais参数配置</a><br/>
+    <a href="#26-查询接口">2.6 查询接口</a><br/>
+    <a href="#27-单元测试">2.7 单元测试</a><br/>
 <a href="#三SpringBoot-+-Mybatis-+-Phoenix">三、SpringBoot + Mybatis + Phoenix</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-项目结构">3.1 项目结构</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-主要依赖">3.2 主要依赖</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-配置数据源">3.3 配置数据源</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-新建查询接口">3.4 新建查询接口</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#35-单元测试">3.5 单元测试</a><br/>
+    <a href="#31-项目结构">3.1 项目结构</a><br/>
+    <a href="#32-主要依赖">3.2 主要依赖</a><br/>
+    <a href="#33-配置数据源">3.3 配置数据源</a><br/>
+    <a href="#34-新建查询接口">3.4 新建查询接口</a><br/>
+    <a href="#35-单元测试">3.5 单元测试</a><br/>
 <a href="#附建表语句">附：建表语句</a><br/>
 </nav>
 
@@ -244,6 +244,7 @@ public class PopulationDaoTest {
 
 spring boot 与 mybatis 版本的对应关系：
 
+
 | MyBatis-Spring-Boot-Starter 版本 | MyBatis-Spring 版本 | Spring Boot 版本 |
 | -------------------------------- | ------------------- | ---------------- |
 | **1.3.x (1.3.1)**                | 1.3 or higher       | 1.5 or higher    |
@@ -359,8 +360,6 @@ public class PopulationTest {
 
 ```
 
-
-
 ## 附：建表语句
 
 上面单元测试涉及到的测试表的建表语句如下：
@@ -371,7 +370,7 @@ CREATE TABLE IF NOT EXISTS us_population (
       city VARCHAR NOT NULL,
       population BIGINT
       CONSTRAINT my_pk PRIMARY KEY (state, city));
-      
+    
 -- 测试数据
 UPSERT INTO us_population VALUES('NY','New York',8143197);
 UPSERT INTO us_population VALUES('CA','Los Angeles',3844829);

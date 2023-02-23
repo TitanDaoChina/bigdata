@@ -121,7 +121,7 @@ object NetworkWordCountV2 {
      * 此时在 HDFS 上创建目录时可能会抛出权限不足的异常
      */
     System.setProperty("HADOOP_USER_NAME", "root")
-    
+  
     val sparkConf = new SparkConf().setAppName("NetworkWordCountV2").setMaster("local[2]")
     val ssc = new StreamingContext(sparkConf, Seconds(5))
     /*必须要设置检查点*/

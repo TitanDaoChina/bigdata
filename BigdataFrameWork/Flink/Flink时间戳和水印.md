@@ -2,7 +2,6 @@
 
 在介绍Watermark相关内容之前我们先抛出一个具体的问题，在实际的流式计算中数据到来的顺序对计算结果的正确性有至关重要的影响，比如：某数据源中的某些数据由于某种原因(如：网络原因，外部存储自身原因)会有5秒的延时，也就是在实际时间的第1秒产生的数据有可能在第5秒中产生的数据之后到来(比如到Window处理节点).选具体某个delay的元素来说，假设在一个5秒的Tumble窗口(详见Window介绍章节)，有一个EventTime是 11秒的数据，在第16秒时候到来了。图示第11秒的数据，在16秒到来了，如下图：
 
-
 ![img_36.png](resources/img_36.png)
 
 那么对于一个Count聚合的Tumble(5s)的window，上面的情况如何处理才能window2=4，window3=2 呢？Apache Flink的时间类型
@@ -36,9 +35,7 @@ EventTime是事件在设备上产生时候携带的。在进入Apache Flink框�
 
 Watermark是Apache Flink为了处理EventTime 窗口计算提出的一种机制,本质上也是一种时间戳，由Apache Flink Source或者自定义的Watermark生成器按照需求Punctuated或者Periodic两种方式生成的一种系统Event，与普通数据流Event一样流转到对应的下游算子，接收到Watermark Event的算子以此不断调整自己管理的EventTime clock。 Apache Flink 框架保证Watermark单调递增，算子接收到一个Watermark时候，框架知道不会再有任何小于该Watermark的时间戳的数据元素到来了，所以Watermark可以看做是告诉Apache Flink框架数据流已经处理到什么位置(时间维度)的方式。 Watermark的产生和Apache Flink内部处理逻辑如下图所示:
 
-
 ![img_39.png](resources/img_39.png)
-
 
 ## Watermark的产生方式
 
@@ -64,7 +61,7 @@ Watermark是Apache Flink为了处理EventTime 窗口计算提出的一种机制,
 * system to retrieve the current watermark. The method may return {@code null} to
 * indicate that no new Watermark is available.
 *
-* &lt;p&gt;The returned watermark will be emitted only if it is non-null and itsTimestamp
+* <p>The returned watermark will be emitted only if it is non-null and itsTimestamp
 * is larger than that of the previously emitted watermark (to preserve the contract of
 * ascending watermarks). If the current watermark is still
 * identical to the previous one, no progress in EventTime has happened since
@@ -72,7 +69,7 @@ Watermark是Apache Flink为了处理EventTime 窗口计算提出的一种机制,
 * of the returned watermark is smaller than that of the last emitted one, then no
 * new watermark will be generated.
 *
-* &lt;p&gt;The interval in which this method is called and Watermarks are generated
+* <p>The interval in which this method is called and Watermarks are generated
 * depends on {@link ExecutionConfig#getAutoWatermarkInterval()}.
 *
 * @see org.Apache.flink.streaming.api.watermark.Watermark
@@ -87,19 +84,19 @@ Watermark getCurrentWatermark();
 * Punctuated Watermarks - AssignerWithPunctuatedWatermarks
 
 ```
-public interface AssignerWithPunctuatedWatermarks&lt;T&gt; extendsTimestampAssigner&lt;T&gt; {
+public interface AssignerWithPunctuatedWatermarks<T> extendsTimestampAssigner<T> {
 
 /**
 * Asks this implementation if it wants to emit a watermark. This method is called right after
 * the {@link #extractTimestamp(Object, long)} method.
 *
-* &lt;p&gt;The returned watermark will be emitted only if it is non-null and itsTimestamp
+* <p>The returned watermark will be emitted only if it is non-null and itsTimestamp
 * is larger than that of the previously emitted watermark (to preserve the contract of
 * ascending watermarks). If a null value is returned, or theTimestamp of the returned
 * watermark is smaller than that of the last emitted one, then no new watermark will
 * be generated.
 *
-* &lt;p&gt;For an example how to use this method, see the documentation of
+* <p>For an example how to use this method, see the documentation of
 * {@link AssignerWithPunctuatedWatermarks this class}.
 *
 * @return {@code Null}, if no watermark should be emitted, or the next watermark to emit.
@@ -111,14 +108,13 @@ Watermark checkAndGetNextWatermark(T lastElement, long extractedTimestamp);
 
 AssignerWithPunctuatedWatermarks 继承了TimestampAssigner接口 -TimestampAssigner
 
-
 ```
-public interfaceTimestampAssigner&lt;T&gt; extends Function {
+public interfaceTimestampAssigner<T> extends Function {
 
 /**
 * Assigns aTimestamp to an element, in milliseconds since the Epoch.
 *
-* &lt;p&gt;The method is passed the previously assignedTimestamp of the element.
+* <p>The method is passed the previously assignedTimestamp of the element.
 * That previousTimestamp may have been assigned from a previous assigner,
 * by ingestionTime. If the element did not carry aTimestamp before, this value is
 * {@code Long.MIN_VALUE}.
@@ -146,7 +142,6 @@ long extractTimestamp(T element, long previousElementTimestamp);
 
 上面对应的DDL(Alibaba 企业版的Flink分支)定义如下：
 
-
 ```
 CREATE TABLE source(
 ...,
@@ -160,7 +155,6 @@ WATERMARK wk1 FOR Event_time as withOffset(Event_time, 0)
 * 如果想正确处理迟来的数据可以定义Watermark生成策略为 Watermark = EventTime -5s， 如下：
 
 ![img_41.png](resources/img_41.png)
-
 
 上面对应的DDL(Alibaba 内部的DDL语法，目前正在和社区讨论)定义如下：
 

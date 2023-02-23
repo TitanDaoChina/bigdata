@@ -3,25 +3,23 @@
 <nav>
 <a href="#一前言">一、前言</a><br/>
 <a href="#二CopyTable">二、CopyTable</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-简介">2.1 简介</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-命令格式">2.2 命令格式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-常用命令">2.3 常用命令</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-更多参数">2.4 更多参数</a><br/>
+    <a href="#21-简介">2.1 简介</a><br/>
+    <a href="#22-命令格式">2.2 命令格式</a><br/>
+    <a href="#23-常用命令">2.3 常用命令</a><br/>
+    <a href="#24-更多参数">2.4 更多参数</a><br/>
 <a href="#三ExportImport">三、Export/Import</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-简介">3.1 简介</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-命令格式">3.2 命令格式</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-常用命令">3.3 常用命令</a><br/>
+    <a href="#31-简介">3.1 简介</a><br/>
+    <a href="#32-命令格式">3.2 命令格式</a><br/>
+    <a href="#33-常用命令">3.3 常用命令</a><br/>
 <a href="#四Snapshot">四、Snapshot</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-简介">4.1 简介</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-配置">4.2 配置</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-常用命令">4.3 常用命令</a><br/>
+    <a href="#41-简介">4.1 简介</a><br/>
+    <a href="#42-配置">4.2 配置</a><br/>
+    <a href="#43-常用命令">4.3 常用命令</a><br/>
 </nav>
 
 ## 一、前言
 
 本文主要介绍 Hbase 常用的三种简单的容灾备份方案，即**CopyTable**、**Export**/**Import**、**Snapshot**。分别介绍如下：
-
-
 
 ## 二、CopyTable
 
@@ -60,7 +58,6 @@ hbase org.apache.hadoop.hbase.mapreduce.CopyTable \
 --new.name=tableCopy tableOrig
 ```
 
-
 3. 下面是一个官方给的比较完整的例子，指定开始和结束时间，集群地址，以及只复制指定的列族：
 
 ```shell
@@ -80,7 +77,6 @@ hbase org.apache.hadoop.hbase.mapreduce.CopyTable \
 ```
 
 ![img_25.png](resources/img_25.png)
-
 
 ## 三、Export/Import
 
@@ -116,8 +112,6 @@ hbase org.apache.hadoop.hbase.mapreduce.Export tableName  hdfs 路径/tableName.
 hbase org.apache.hadoop.hbase.mapreduce.Import tableName  hdfs 路径/tableName.db
 ```
 
-
-
 ## 四、Snapshot
 
 ### 4.1 简介
@@ -134,8 +128,6 @@ HBase 快照功能默认没有开启，如果要开启快照，需要在 `hbase-
     <value>true</value>
 </property>
 ```
-
-
 
 ### 4.3 常用命令
 
@@ -186,6 +178,3 @@ hbase> restore_snapshot '快照名'
 ```
 
 这里需要注意的是：是如果 HBase 配置了基于 Replication 的主从复制，由于 Replication 在日志级别工作，而快照在文件系统级别工作，因此在还原之后，会出现副本与主服务器处于不同的状态的情况。这时候可以先停止同步，所有服务器还原到一致的数据点后再重新建立同步。
-
-
-

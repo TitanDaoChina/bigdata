@@ -1,31 +1,31 @@
 # Hbase 常用 Shell 命令
+
 <nav>
 <a href="#一基本命令">一、基本命令</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-获取帮助">1.1 获取帮助</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-查看服务器状态">1.2 查看服务器状态</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-查看版本信息">1.3 查看版本信息</a><br/>
+        <a href="#11-获取帮助">1.1 获取帮助</a><br/>
+        <a href="#12-查看服务器状态">1.2 查看服务器状态</a><br/>
+        <a href="#13-查看版本信息">1.3 查看版本信息</a><br/>
 <a href="#二关于表的操作">二、关于表的操作</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-查看所有表">2.1 查看所有表</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-创建表">2.2 创建表</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-查看表的基本信息">2.3 查看表的基本信息</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-表的启用禁用">2.4 表的启用/禁用</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#25-检查表是否存在">2.5 检查表是否存在</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#26-删除表">2.6 删除表</a><br/>
+        <a href="#21-查看所有表">2.1 查看所有表</a><br/>
+        <a href="#22-创建表">2.2 创建表</a><br/>
+        <a href="#23-查看表的基本信息">2.3 查看表的基本信息</a><br/>
+        <a href="#24-表的启用禁用">2.4 表的启用/禁用</a><br/>
+        <a href="#25-检查表是否存在">2.5 检查表是否存在</a><br/>
+        <a href="#26-删除表">2.6 删除表</a><br/>
 <a href="#三增删改">三、增删改</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-添加列族">3.1 添加列族</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-删除列族">3.2 删除列族</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-更改列族存储版本的限制">3.3 更改列族存储版本的限制</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-插入数据">3.4 插入数据</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#35-获取指定行指定行中的列族列的信息">3.5 获取指定行、指定行中的列族、列的信息</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#36-删除指定行指定行中的列">3.6 删除指定行、指定行中的列</a><br/>
+        <a href="#31-添加列族">3.1 添加列族</a><br/>
+        <a href="#32-删除列族">3.2 删除列族</a><br/>
+        <a href="#33-更改列族存储版本的限制">3.3 更改列族存储版本的限制</a><br/>
+        <a href="#34-插入数据">3.4 插入数据</a><br/>
+        <a href="#35-获取指定行指定行中的列族列的信息">3.5 获取指定行、指定行中的列族、列的信息</a><br/>
+        <a href="#36-删除指定行指定行中的列">3.6 删除指定行、指定行中的列</a><br/>
 <a href="#四查询">四、查询</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41Get查询">4.1Get查询</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-查询整表数据">4.2 查询整表数据</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-查询指定列簇的数据">4.3 查询指定列簇的数据</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44--条件查询">4.4  条件查询</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#45--条件过滤">4.5  条件过滤</a><br/>
+        <a href="#41Get查询">4.1Get查询</a><br/>
+        <a href="#42-查询整表数据">4.2 查询整表数据</a><br/>
+        <a href="#43-查询指定列簇的数据">4.3 查询指定列簇的数据</a><br/>
+        <a href="#44--条件查询">4.4  条件查询</a><br/>
+        <a href="#45--条件过滤">4.5  条件过滤</a><br/>
 </nav>
-
 
 ## 一、基本命令
 
@@ -51,14 +51,12 @@ status
 ```
 
 #### 1.3 查看版本信息
+
 ```shell
 version
 ```
 
-
-
 ## 二、关于表的操作
-
 
 #### 2.1 查看所有表
 
@@ -113,10 +111,7 @@ disable 'Student'
 drop 'Student'
 ```
 
-
-
 ## 三、增删改
-
 
 #### 3.1 添加列族
 
@@ -190,14 +185,11 @@ deleteall 'Student','rowkey3'
 delete 'Student','rowkey3','baseInfo:name'
 ```
 
-
-
 ## 四、查询
 
 hbase 中访问数据有两种基本的方式：
 
 + 按指定 rowkey 获取数据：get 方法；
-
 + 按指定条件获取数据：scan 方法。
 
 `scan` 可以设置 begin 和 end 参数来访问一个范围内所有的数据。get 本质上就是 begin 和 end 相等的一种特殊的 scan。
@@ -272,7 +264,3 @@ scan 'Student', FILTER=>"ColumnPrefixFilter('birth') AND ValueFilter ValueFilter
 ```shell
 scan 'Student', FILTER=>"PrefixFilter('wr')"
 ```
-
-
-
-

@@ -3,26 +3,23 @@
 <nav>
 <a href="#一简述">一、简述</a><br/>
 <a href="#二协处理器类型">二、协处理器类型</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-Observer协处理器">2.1 Observer协处理器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22--Endpoint协处理器">2.2  Endpoint协处理器</a><br/>
+    <a href="#21-Observer协处理器">2.1 Observer协处理器</a><br/>
+    <a href="#22--Endpoint协处理器">2.2  Endpoint协处理器</a><br/>
 <a href="#三协处理的加载方式">三、协处理的加载方式</a><br/>
 <a href="#四静态加载与卸载">四、静态加载与卸载</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-静态加载">4.1 静态加载</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-静态卸载">4.2 静态卸载</a><br/>
+    <a href="#41-静态加载">4.1 静态加载</a><br/>
+    <a href="#42-静态卸载">4.2 静态卸载</a><br/>
 <a href="#五动态加载与卸载">五、动态加载与卸载</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-HBase-Shell动态加载">5.1 HBase Shell动态加载</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-HBase-Shell动态卸载">5.2 HBase Shell动态卸载</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#53-Java-API-动态加载">5.3 Java API 动态加载</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="#54-Java-API-动态卸载">5.4 Java API 动态卸载</a><br/>
+    <a href="#51-HBase-Shell动态加载">5.1 HBase Shell动态加载</a><br/>
+    <a href="#52-HBase-Shell动态卸载">5.2 HBase Shell动态卸载</a><br/>
+    <a href="#53-Java-API-动态加载">5.3 Java API 动态加载</a><br/>
+    <a href="#54-Java-API-动态卸载">5.4 Java API 动态卸载</a><br/>
 <a href="#六协处理器案例">六、协处理器案例</a><br/>
 </nav>
-
 
 ## 一、简述
 
 在使用 HBase 时，如果你的数据量达到了数十亿行或数百万列，此时能否在查询中返回大量数据将受制于网络的带宽，即便网络状况允许，但是客户端的计算处理也未必能够满足要求。在这种情况下，协处理器（Coprocessors）应运而生。它允许你将业务计算代码放入在 RegionServer 的协处理器中，将处理好的数据再返回给客户端，这可以极大地降低需要传输的数据量，从而获得性能上的提升。同时协处理器也允许用户扩展实现 HBase 目前所不具备的功能，如权限校验、二级索引、完整性约束等。
-
-
 
 ## 二、协处理器类型
 
@@ -53,7 +50,7 @@ Observer 协处理器类似于关系型数据库中的触发器，当发生某�
 
 </br>
 
-####  3. 接口
+#### 3. 接口
 
 以上四种类型的 Observer 协处理器均继承自 `Coprocessor` 接口，这四个接口中分别定义了所有可用的钩子方法，以便在对应方法前后执行特定的操作。通常情况下，我们并不会直接实现上面接口，而是继承其 Base 实现类，Base 实现类只是简单空实现了接口中的方法，这样我们在实现自定义的协处理器时，就不必实现所有方法，只需要重写必要方法即可。
 
@@ -76,19 +73,15 @@ Observer 协处理器类似于关系型数据库中的触发器，当发生某�
 
 如果大家了解 Spring，可以将这种执行方式类比于其 AOP 的执行原理即可，官方文档当中也是这样类比的：
 
->If you are familiar with Aspect Oriented Programming (AOP), you can think of a coprocessor as applying advice by intercepting a request and then running some custom code,before passing the request on to its final destination (or even changing the destination).
+> If you are familiar with Aspect Oriented Programming (AOP), you can think of a coprocessor as applying advice by intercepting a request and then running some custom code,before passing the request on to its final destination (or even changing the destination).
 >
->如果您熟悉面向切面编程（AOP），您可以将协处理器视为通过拦截请求然后运行一些自定义代码来使用 Advice，然后将请求传递到其最终目标（或者更改目标）。
-
-
+> 如果您熟悉面向切面编程（AOP），您可以将协处理器视为通过拦截请求然后运行一些自定义代码来使用 Advice，然后将请求传递到其最终目标（或者更改目标）。
 
 ### 2.2  Endpoint协处理器
 
 Endpoint 协处理器类似于关系型数据库中的存储过程。客户端可以调用 Endpoint 协处理器在服务端对数据进行处理，然后再返回。
 
 以聚集操作为例，如果没有协处理器，当用户需要找出一张表中的最大数据，即 max 聚合操作，就必须进行全表扫描，然后在客户端上遍历扫描结果，这必然会加重了客户端处理数据的压力。利用 Coprocessor，用户可以将求最大值的代码部署到 HBase Server 端，HBase 将利用底层 cluster 的多个节点并发执行求最大值的操作。即在每个 Region 范围内执行求最大值的代码，将每个 Region 的最大值在 Region Server 端计算出来，仅仅将该 max 值返回给客户端。之后客户端只需要将每个 Region 的最大值进行比较而找到其中最大的值即可。
-
-
 
 ## 三、协处理的加载方式
 
@@ -98,8 +91,6 @@ Endpoint 协处理器类似于关系型数据库中的存储过程。客户端�
 + 动态加载的协处理器称之为 **Table Coprocessor**（表处理器），作用于指定的表，不需要重启 HBase 服务。
 
 其加载和卸载方式分别介绍如下。
-
-
 
 ## 四、静态加载与卸载
 
@@ -125,7 +116,6 @@ Endpoint 协处理器类似于关系型数据库中的存储过程。客户端�
 `<value>` 必须是协处理器实现类的全限定类名。如果为加载指定了多个类，则类名必须以逗号分隔。
 
 2. 将 jar(包含代码和所有依赖项) 放入 HBase 安装目录中的 `lib` 目录下；
-
 3. 重启 HBase。
 
 </br>
@@ -133,13 +123,8 @@ Endpoint 协处理器类似于关系型数据库中的存储过程。客户端�
 ### 4.2 静态卸载
 
 1. 从 hbase-site.xml 中删除配置的协处理器的\<property>元素及其子元素；
-
 2. 从类路径或 HBase 的 lib 目录中删除协处理器的 JAR 文件（可选）；
-
 3. 重启 HBase。
-
-
-
 
 ## 五、动态加载与卸载
 
@@ -171,9 +156,7 @@ arg1=1,arg2=2'
 
 + **JAR 包路径**：通常为 JAR 包在 HDFS 上的路径。关于路径以下两点需要注意：
 + 允许使用通配符，例如：`hdfs://<namenode>:<port>/user/<hadoop-user>/*.jar` 来添加指定的 JAR 包；
-
 + 可以使指定目录，例如：`hdfs://<namenode>:<port>/user/<hadoop-user>/` ，这会添加目录中的所有 JAR 包，但不会搜索子目录中的 JAR 包。
-
 + **类名**：协处理器的完整类名。
 + **优先级**：协处理器的优先级，遵循数字的自然序，即值越小优先级越高。可以为空，在这种情况下，将分配默认优先级值。
 + **可选参数** ：传递的协处理器的可选参数。
@@ -198,9 +181,9 @@ hbase > describe 'tableName'
 
 1. 禁用表
 
- ```shell
+```shell
 hbase> disable 'tableName'
- ```
+```
 
 2. 移除表协处理器
 
@@ -261,8 +244,6 @@ admin.modifyTable(tableName, hTableDescriptor);
 admin.enableTable(tableName);
 ```
 
-
-
 ### 5.4 Java API 动态卸载
 
 卸载其实就是重新定义表但不设置协处理器。这会删除所有表上的协处理器。
@@ -284,8 +265,6 @@ hTableDescriptor.addFamily(columnFamily2);
 admin.modifyTable(tableName, hTableDescriptor);
 admin.enableTable(tableName);
 ```
-
-
 
 ## 六、协处理器案例
 
@@ -391,6 +370,7 @@ hadoop fs -ls /hbase
 ```shell
 hbase >  disable 'magazine'
 ```
+
 2. 加载协处理器
 
 ```shell
@@ -442,11 +422,13 @@ hbase > get 'magazine','rowkey1','article:author'
 ![img_22.png](resources/img_22.png)
 
 ### 6.7 卸载协处理器
+
 1. 卸载协处理器前需要先禁用表
 
 ```shell
 hbase >  disable 'magazine'
 ```
+
 2. 卸载协处理器
 
 ```shell
@@ -478,5 +460,3 @@ hbase > get 'magazine','rowkey1','article:content'
 ```
 
 ![img_24.png](resources/img_24.png)
-
-

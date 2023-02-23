@@ -7,7 +7,6 @@
 <a href="#四使用Spark-SQL进行基本查询">四、使用Spark SQL进行基本查询</a><br/>
 </nav>
 
-
 ## 一、创建DataFrame和Dataset
 
 ### 1.1 创建DataFrame
@@ -236,4 +235,3 @@ df.createGlobalTempView("gemp")
 // 使用限定名称进行引用
 spark.sql("SELECT ename,job FROM global_temp.gemp").show()
 ```
-

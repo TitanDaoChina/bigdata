@@ -1,28 +1,27 @@
 # Flink 状态管理
+
 <nav>
 <a href="#一状态分类">一、状态分类</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-算子状态">2.1 算子状态</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-键控状态">2.2 键控状态</a><br/>
+        <a href="#21-算子状态">2.1 算子状态</a><br/>
+        <a href="#22-键控状态">2.2 键控状态</a><br/>
 <a href="#二状态编程">二、状态编程</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-键控状态">2.1 键控状态</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-状态有效期">2.2 状态有效期</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-算子状态">2.3 算子状态</a><br/>
+        <a href="#21-键控状态">2.1 键控状态</a><br/>
+        <a href="#22-状态有效期">2.2 状态有效期</a><br/>
+        <a href="#23-算子状态">2.3 算子状态</a><br/>
 <a href="#三检查点机制">三、检查点机制</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-CheckPoints">3.1 CheckPoints</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-开启检查点">3.2 开启检查点</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-保存点机制">3.3 保存点机制</a><br/>
+        <a href="#31-CheckPoints">3.1 CheckPoints</a><br/>
+        <a href="#32-开启检查点">3.2 开启检查点</a><br/>
+        <a href="#33-保存点机制">3.3 保存点机制</a><br/>
 <a href="#四状态后端">四、状态后端</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-状态管理器分类">4.1 状态管理器分类</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-配置方式">4.2 配置方式</a><br/>
+        <a href="#41-状态管理器分类">4.1 状态管理器分类</a><br/>
+        <a href="#42-配置方式">4.2 配置方式</a><br/>
 </nav>
-
 
 ## 一、状态分类
 
 相对于其他流计算框架，Flink 一个比较重要的特性就是其支持有状态计算。即你可以将中间的计算结果进行保存，并提供给后续的计算使用：
 
 ![img_22.png](resources/img_22.png)
-
 
 具体而言，Flink 又将状态 (State) 分为 Keyed State 与 Operator State：
 
@@ -32,13 +31,11 @@
 
 ![img_23.png](resources/img_23.png)
 
-
 ### 2.2 键控状态
 
 键控状态 (Keyed State) ：是一种特殊的算子状态，即状态是根据 key 值进行区分的，Flink 会为每类键值维护一个状态实例。如下图所示，每个颜色代表不同 key 值，对应四个不同的状态实例。需要注意的是键控状态只能在 `KeyedStream` 上进行使用，我们可以通过 `stream.keyBy(...)` 来得到 `KeyedStream` 。
 
 ![img_24.png](resources/img_24.png)
-
 
 ## 二、状态编程
 
@@ -51,7 +48,7 @@ Flink 提供了以下数据格式来管理和存储键控状态 (Keyed State)：
 - **ReducingState**：用于存储经过 ReduceFunction 计算后的结果，使用 `add(T)` 增加元素。
 - **AggregatingState**：用于存储经过 AggregatingState 计算后的结果，使用 `add(IN)` 添加元素。
 - **FoldingState**：已被标识为废弃，会在未来版本中移除，官方推荐使用 `AggregatingState` 代替。
--  **MapState**：维护 Map 类型的状态。
+- **MapState**：维护 Map 类型的状态。
 
 以上所有增删改查方法不必硬记，在使用时通过语法提示来调用即可。这里给出一个具体的使用示例：假设我们正在开发一个监控系统，当监控数据超过阈值一定次数后，需要发出报警信息。这里之所以要达到一定次数，是因为由于偶发原因，偶尔一次超过阈值并不能代表什么，故需要达到一定次数后才触发报警，这就需要使用到 Flink 的状态编程。相关代码如下：
 
@@ -116,7 +113,6 @@ env.execute("Managed Keyed State");
 输出如下结果如下：
 
 ![img_25.png](resources/img_25.png)
-
 
 ### 2.2 状态有效期
 
@@ -230,11 +226,9 @@ env.execute("Managed Keyed State");
 
 ![img_26.png](resources/img_26.png)
 
-
 在上面的调用代码中，我们将程序的并行度设置为 1，可以看到三次输出中状态实例的 hashcode 全是一致的，证明它们都同一个状态实例。假设将并行度设置为 2，此时输出如下：
 
 ![img_27.png](resources/img_27.png)
-
 
 可以看到此时两次输出中状态实例的 hashcode 是不一致的，代表它们不是同一个状态实例，这也就是上文提到的，一个算子状态是与一个并发的算子实例所绑定的。同时这里只输出两次，是因为在并发处理的情况下，线程 1 可能拿到 5 个非正常值，线程 2 可能拿到 4 个非正常值，因为要大于 3 次才能输出，所以在这种情况下就会出现只输出两条记录的情况，所以需要将程序的并行度设置为 1。
 
@@ -245,9 +239,6 @@ env.execute("Managed Keyed State");
 为了使 Flink 的状态具有良好的容错性，Flink 提供了检查点机制 (CheckPoints)  。通过检查点机制，Flink 定期在数据流上生成 checkpoint barrier ，当某个算子收到 barrier 时，即会基于当前状态生成一份快照，然后再将该 barrier 传递到下游算子，下游算子接收到该 barrier 后，也基于当前状态生成一份快照，依次传递直至到最后的 Sink 算子上。当出现异常后，Flink 就可以根据最近的一次的快照数据将所有算子恢复到先前的状态。
 
 ![img_28.png](resources/img_28.png)
-
-
-
 
 ### 3.2 开启检查点
 
@@ -282,7 +273,7 @@ env.getCheckpointConfig().setPreferCheckpointForRecovery(true);
 bin/flink savepoint :jobId [:targetDirectory]
 ```
 
-更多命令和配置可以参考官方文档：[savepoints]( https://ci.apache.org/projects/flink/flink-docs-release-1.9/zh/ops/state/savepoints.html )
+更多命令和配置可以参考官方文档：[savepoints](https://ci.apache.org/projects/flink/flink-docs-release-1.9/zh/ops/state/savepoints.html )
 
 ## 四、状态后端
 
@@ -336,16 +327,4 @@ state.backend: filesystem
 state.checkpoints.dir: hdfs://namenode:40010/flink/checkpoints
 ```
 
-
-
-> 注：本篇文章所有示例代码下载地址：[flink-state-management]( https://github.com/heibaiying/BigData-Notes/tree/master/code/Flink/flink-state-management)
-
-
-
-
-
-
-
-
-
-
+> 注：本篇文章所有示例代码下载地址：[flink-state-management](https://github.com/heibaiying/BigData-Notes/tree/master/code/Flink/flink-state-management)

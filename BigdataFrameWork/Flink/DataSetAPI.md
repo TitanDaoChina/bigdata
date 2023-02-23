@@ -23,7 +23,7 @@ System.err.println("USAGE:\nSocketTextStreamWordCount <hostname> <port>");
 	}
 ```
 
-上面的`SocketTextStreamWordCount`是一个典型的Flink程序，他由一下及格部分构成：
+上面的`SocketTextStreamWordCount`是一个典型的Flink程序，他由以下几个部分构成：
 
 * 获得一个execution environment，
 * 加载/创建初始数据，
@@ -296,7 +296,7 @@ DataSet<String> result = data1.union(data2);
 DataSet<String> in = // [...]
 DataSet<String> result = in.rebalance()
                            .map(new Mapper());
-                         
+                   
 ```
 
 * Hash-Partition

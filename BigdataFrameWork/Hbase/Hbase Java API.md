@@ -7,15 +7,12 @@
 <a href="#四正确连接Hbase">四、正确连接Hbase</a><br/>
 </nav>
 
-
-
 ## 一、简述
 
 截至到目前 (2019.04)，HBase 有两个主要的版本，分别是 1.x 和 2.x ，两个版本的 Java API 有所不同，1.x 中某些方法在 2.x 中被标识为 `@deprecated` 过时。所以下面关于 API 的样例，我会分别给出 1.x 和 2.x 两个版本。完整的代码见本仓库：
 
->+ [Java API 1.x Examples](https://github.com/heibaiying/BigData-Notes/tree/master/code/Hbase/hbase-java-api-1.x)
->
->+ [Java API 2.x Examples](https://github.com/heibaiying/BigData-Notes/tree/master/code/Hbase/hbase-java-api-2.x)
+> + [Java API 1.x Examples](https://github.com/heibaiying/BigData-Notes/tree/master/code/Hbase/hbase-java-api-1.x)
+> + [Java API 2.x Examples](https://github.com/heibaiying/BigData-Notes/tree/master/code/Hbase/hbase-java-api-2.x)
 
 同时你使用的客户端的版本必须与服务端版本保持一致，如果用 2.x 版本的客户端代码去连接 1.x 版本的服务端，会抛出 `NoSuchColumnFamilyException` 等异常。
 
@@ -390,8 +387,6 @@ public class HBaseUtilsTest {
 }
 ```
 
-
-
 ## 三、Java API 2.x 基本使用
 
 #### 3.1 新建Maven工程，导入项目依赖
@@ -411,7 +406,6 @@ public class HBaseUtilsTest {
 2.x 版本相比于 1.x 废弃了一部分方法，关于废弃的方法在源码中都会指明新的替代方法，比如，在 2.x 中创建表时：`HTableDescriptor` 和 `HColumnDescriptor` 等类都标识为废弃，取而代之的是使用 `TableDescriptorBuilder` 和 `ColumnFamilyDescriptorBuilder` 来定义表和列族。
 
 ![img_10.png](resources/img_10.png)
-
 
 以下为 HBase  2.x 版本 Java API 的使用示例：
 
@@ -671,8 +665,6 @@ public class HBaseUtils {
 }
 ```
 
-
-
 ## 四、正确连接Hbase
 
 在上面的代码中，在类加载时就初始化了 Connection 连接，并且之后的方法都是复用这个 Connection，这时我们可能会考虑是否可以使用自定义连接池来获取更好的性能表现？实际上这是没有必要的。
@@ -720,7 +712,6 @@ Connection 对象和实际的 Socket 连接之间的对应关系如下图：
 
 ![img_12.png](resources/img_12.png)
 
-
 在 HBase 客户端代码中，真正对应 Socket 连接的是 `RpcConnection` 对象。HBase 使用 `PoolMap` 这种数据结构来存储客户端到 HBase 服务器之间的连接。`PoolMap` 的内部有一个 `ConcurrentHashMap` 实例，其 key 是 `ConnectionId`(封装了服务器地址和用户 ticket)，value 是一个 `RpcConnection` 对象的资源池。当 HBase 需要连接一个服务器时，首先会根据 `ConnectionId` 找到对应的连接池，然后从连接池中取出一个连接对象。
 
 ```java
@@ -749,5 +740,3 @@ connection = ConnectionFactory.createConnection(config);
 由此可以看出 HBase 中 Connection 类已经实现了对连接的管理功能，所以我们不必在 Connection 上在做额外的管理。
 
 另外，Connection 是线程安全的，但 Table 和 Admin 却不是线程安全的，因此正确的做法是一个进程共用一个 Connection 对象，而在不同的线程中使用单独的 Table 和 Admin 对象。Table 和 Admin 的获取操作 `getTable()` 和 `getAdmin()` 都是轻量级，所以不必担心性能的消耗，同时建议在使用完成后显示的调用 `close()` 方法来关闭它们。
-
-

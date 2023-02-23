@@ -3,35 +3,32 @@
 <nav>
 <a href="#一HBase过滤器简介">一、HBase过滤器简介</a><br/>
 <a href="#二过滤器基础">二、过滤器基础</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21--Filter接口和FilterBase抽象类">2.1  Filter接口和FilterBase抽象类</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-过滤器分类">2.2 过滤器分类</a><br/>
+        <a href="#21--Filter接口和FilterBase抽象类">2.1  Filter接口和FilterBase抽象类</a><br/>
+        <a href="#22-过滤器分类">2.2 过滤器分类</a><br/>
 <a href="#三比较过滤器">三、比较过滤器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-比较运算符">3.1 比较运算符</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-比较器">3.2 比较器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-比较过滤器种类">3.3 比较过滤器种类</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-DependentColumnFilter">3.4 DependentColumnFilter </a><br/>
+        <a href="#31-比较运算符">3.1 比较运算符</a><br/>
+        <a href="#32-比较器">3.2 比较器</a><br/>
+        <a href="#33-比较过滤器种类">3.3 比较过滤器种类</a><br/>
+        <a href="#34-DependentColumnFilter">3.4 DependentColumnFilter </a><br/>
 <a href="#四专用过滤器">四、专用过滤器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-单列列值过滤器-SingleColumnValueFilter">4.1 单列列值过滤器 (SingleColumnValueFilter)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-单列列值排除器-SingleColumnValueExcludeFilter">4.2 单列列值排除器 (SingleColumnValueExcludeFilter) </a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-行键前缀过滤器-PrefixFilter">4.3 行键前缀过滤器 (PrefixFilter)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-列名前缀过滤器-ColumnPrefixFilter">4.4 列名前缀过滤器 (ColumnPrefixFilter)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#45-分页过滤器-PageFilter">4.5 分页过滤器 (PageFilter)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#46-时间戳过滤器-TimestampsFilter">4.6 时间戳过滤器 (TimestampsFilter)</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#47-首次行键过滤器-FirstKeyOnlyFilter">4.7 首次行键过滤器 (FirstKeyOnlyFilter)</a><br/>
+        <a href="#41-单列列值过滤器-SingleColumnValueFilter">4.1 单列列值过滤器 (SingleColumnValueFilter)</a><br/>
+        <a href="#42-单列列值排除器-SingleColumnValueExcludeFilter">4.2 单列列值排除器 (SingleColumnValueExcludeFilter) </a><br/>
+        <a href="#43-行键前缀过滤器-PrefixFilter">4.3 行键前缀过滤器 (PrefixFilter)</a><br/>
+        <a href="#44-列名前缀过滤器-ColumnPrefixFilter">4.4 列名前缀过滤器 (ColumnPrefixFilter)</a><br/>
+        <a href="#45-分页过滤器-PageFilter">4.5 分页过滤器 (PageFilter)</a><br/>
+        <a href="#46-时间戳过滤器-TimestampsFilter">4.6 时间戳过滤器 (TimestampsFilter)</a><br/>
+        <a href="#47-首次行键过滤器-FirstKeyOnlyFilter">4.7 首次行键过滤器 (FirstKeyOnlyFilter)</a><br/>
 <a href="#五包装过滤器">五、包装过滤器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#51-SkipFilter过滤器">5.1 SkipFilter过滤器</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#52-WhileMatchFilter过滤器">5.2 WhileMatchFilter过滤器</a><br/>
+        <a href="#51-SkipFilter过滤器">5.1 SkipFilter过滤器</a><br/>
+        <a href="#52-WhileMatchFilter过滤器">5.2 WhileMatchFilter过滤器</a><br/>
 <a href="#六FilterList">六、FilterList</a><br/>
 </nav>
-
-
 
 ## 一、HBase过滤器简介
 
 Hbase 提供了种类丰富的过滤器（filter）来提高数据处理的效率，用户可以通过内置或自定义的过滤器来对数据进行过滤，所有的过滤器都在服务端生效，即谓词下推（predicate push down）。这样可以保证过滤掉的数据不会被传送到客户端，从而减轻网络传输和客户端处理的压力。
 
 ![img_13.png](resources/img_13.png)
-
 
 ## 二、过滤器基础
 
@@ -67,13 +64,9 @@ FilterBase 的所有子类过滤器如下：
 
 > 说明：上图基于当前时间点（2019.4）最新的 Hbase-2.1.4 ，下文所有说明均基于此版本。
 
-
-
 ### 2.2 过滤器分类
 
 HBase 内置过滤器可以分为三类：分别是比较过滤器，专用过滤器和包装过滤器。分别在下面的三个小节中做详细的介绍。
-
-
 
 ## 三、比较过滤器
 
@@ -112,7 +105,6 @@ public enum CompareOperator {
 ```
 
 > 注意：在 1.x 版本的 HBase 中，比较运算符定义在 `CompareFilter.CompareOp` 枚举类中，但在 2.0 之后这个类就被标识为 @deprecated ，并会在 3.0 移除。所以 2.0 之后版本的 HBase 需要使用 `CompareOperator` 这个枚举类。
->
 
 ### 3.2 比较器
 
@@ -151,7 +143,7 @@ public enum CompareOperator {
 ```java
  Filter filter  = new RowFilter(CompareOperator.LESS_OR_EQUAL,
                                 new BinaryComparator(Bytes.toBytes("xxx")));
-  scan.setFilter(filter);    
+  scan.setFilter(filter);  
 ```
 
 `DependentColumnFilter` 的使用稍微复杂一点，这里单独做下说明。
@@ -183,13 +175,9 @@ DependentColumnFilter dependentColumnFilter = new DependentColumnFilter(
     new BinaryPrefixComparator(Bytes.toBytes("xiaolan")));
 ```
 
-+ 首先会去查找 `student:name` 中值以 `xiaolan` 开头的所有数据获得 ` 参考数据集 `，这一步等同于 valueFilter 过滤器；
-
-+ 其次再用参考数据集中所有数据的时间戳去检索其他列，获得时间戳相同的其他列的数据作为 ` 结果数据集 `，这一步等同于时间戳过滤器；
-
-+ 最后如果 `dropDependentColumn` 为 true，则返回 ` 参考数据集 `+` 结果数据集 `，若为 false，则抛弃参考数据集，只返回 ` 结果数据集 `。
-
-
++ 首先会去查找 `student:name` 中值以 `xiaolan` 开头的所有数据获得 `参考数据集`，这一步等同于 valueFilter 过滤器；
++ 其次再用参考数据集中所有数据的时间戳去检索其他列，获得时间戳相同的其他列的数据作为 `结果数据集`，这一步等同于时间戳过滤器；
++ 最后如果 `dropDependentColumn` 为 true，则返回 `参考数据集`+`结果数据集`，若为 false，则抛弃参考数据集，只返回 `结果数据集`。
 
 ## 四、专用过滤器
 
@@ -294,9 +282,7 @@ while (true) {
 System.out.println("total rows: " + totalRows);
 ```
 
->需要注意的是在多台 Regin Services 上执行分页过滤的时候，由于并行执行的过滤器不能共享它们的状态和边界，所以有可能每个过滤器都会在完成扫描前获取了 PageCount 行的结果，这种情况下会返回比分页条数更多的数据，分页过滤器就有失效的可能。
-
-
+> 需要注意的是在多台 Regin Services 上执行分页过滤的时候，由于并行执行的过滤器不能共享它们的状态和边界，所以有可能每个过滤器都会在完成扫描前获取了 PageCount 行的结果，这种情况下会返回比分页条数更多的数据，分页过滤器就有失效的可能。
 
 ### 4.6 时间戳过滤器 (TimestampsFilter)
 
@@ -331,8 +317,6 @@ Filter filter1 = new ValueFilter(CompareOperator.NOT_EQUAL,
 // 使用 SkipFilter 进行包装
 Filter filter2 = new SkipFilter(filter1);
 ```
-
-
 
 ### 5.2 WhileMatchFilter过滤器
 
@@ -438,4 +422,3 @@ FilterList filterList = new FilterList(filters);
 Scan scan = new Scan();
 scan.setFilter(filterList);
 ```
-

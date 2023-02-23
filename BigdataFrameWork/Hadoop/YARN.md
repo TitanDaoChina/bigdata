@@ -3,23 +3,20 @@
 <nav>
 <a href="#一hadoop-yarn-简介">一、hadoop yarn 简介</a><br/>
 <a href="#二YARN架构">二、YARN架构</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#1-ResourceManager">1. ResourceManager</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#2-NodeManager">2. NodeManager</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#3-ApplicationMaster">3. ApplicationMaster </a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#4-Contain">4. Contain</a><br/>
+        <a href="#1-ResourceManager">1. ResourceManager</a><br/>
+        <a href="#2-NodeManager">2. NodeManager</a><br/>
+        <a href="#3-ApplicationMaster">3. ApplicationMaster </a><br/>
+        <a href="#4-Contain">4. Contain</a><br/>
 <a href="#三YARN工作原理简述">三、YARN工作原理简述</a><br/>
 <a href="#四YARN工作原理详述">四、YARN工作原理详述</a><br/>
 <a href="#五提交作业到YARN上运行">五、提交作业到YARN上运行</a><br/>
 </nav>
 
-
-
 ## 一、hadoop yarn 简介
 
-**Apache YARN** (Yet Another Resource Negotiator)  是 hadoop 2.0 引入的集群资源管理系统。用户可以将各种服务框架部署在 YARN 上，由 YARN 进行统一地管理和资源分配。
+**Apache YARN** (Yet Another Resource Negotiator)是 hadoop 2.0 引入的集群资源管理系统。用户可以将各种服务框架部署在 YARN 上，由 YARN 进行统一地管理和资源分配。
 
 ![img_22.png](resources/img_22.png)
-
 
 ## 二、YARN架构
 
@@ -50,28 +47,18 @@
 
 `Container` 是 YARN 中的资源抽象，它封装了某个节点上的多维度资源，如内存、CPU、磁盘、网络等。当 AM 向 RM 申请资源时，RM 为 AM 返回的资源是用 `Container` 表示的。YARN 会为每个任务分配一个 `Container`，该任务只能使用该 `Container` 中描述的资源。`ApplicationMaster` 可在 `Container` 内运行任何类型的任务。例如，`MapReduce ApplicationMaster` 请求一个容器来启动 map 或 reduce 任务，而 `Giraph ApplicationMaster` 请求一个容器来运行 Giraph 任务。
 
-
-
-
-
 ## 三、YARN工作原理简述
 
 ![img_24.png](resources/img_24.png)
 
 1. `Client` 提交作业到 YARN 上；
-
 2. `Resource Manager` 选择一个 `Node Manager`，启动一个 `Container` 并运行 `Application Master` 实例；
-
 3. `Application Master` 根据实际需要向 `Resource Manager` 请求更多的 `Container` 资源（如果作业很小, 应用管理器会选择在其自己的 JVM 中运行任务）；
-
 4. `Application Master` 通过获取到的 `Container` 资源执行分布式计算。
-
-
 
 ## 四、YARN工作原理详述
 
 ![img_25.png](resources/img_25.png)
-
 
 #### 1. 作业提交
 
@@ -103,8 +90,6 @@ YARN 中的任务将其进度和状态 (包括 counter) 返回给应用管理器
 
 除了向应用管理器请求作业进度外,  客户端每 5 分钟都会通过调用 waitForCompletion() 来检查作业是否完成，时间间隔可以通过 mapreduce.client.completion.pollinterval 来设置。作业完成之后,  应用管理器和 container 会清理工作状态， OutputCommiter 的作业清理方法也会被调用。作业的信息会被作业历史服务器存储以备之后用户核查。
 
-
-
 ## 五、提交作业到YARN上运行
 
 这里以提交 Hadoop Examples 中计算 Pi 的 MApReduce 程序为例，相关 Jar 包在 Hadoop 安装目录的 `share/hadoop/mapreduce` 目录下：
@@ -113,6 +98,3 @@ YARN 中的任务将其进度和状态 (包括 counter) 返回给应用管理器
 # 提交格式: hadoop jar jar包路径 主类名称 主类参数
 # hadoop jar hadoop-mapreduce-examples-2.6.0-cdh5.15.2.jar pi 3 3
 ```
-
-
-   

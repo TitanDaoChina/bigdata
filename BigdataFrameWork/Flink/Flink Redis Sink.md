@@ -4,10 +4,10 @@
 本文讲述一个简单的Redis作为Sink的案例。
 后续，我们会补充完善，比如落入Hbase，Kafka，Mysql等。
 
-
 ## 关于Redis Sink
 
 Flink提供了封装好的写入Redis的包给我们用，首先我们要新增一个依赖：
+
 ```
 <dependency>
     <groupId>org.apache.flink</groupId>
@@ -16,7 +16,6 @@ Flink提供了封装好的写入Redis的包给我们用，首先我们要新增�
 </dependency>
 
 ```
-
 
 然后我们实现一个自己的RedisSinkExample：
 
