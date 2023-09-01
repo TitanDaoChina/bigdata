@@ -1,25 +1,24 @@
 # Flink Sink
+
 <nav>
 <a href="#一Data-Sinks">一、Data Sinks</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-writeAsText">1.1 writeAsText</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#12-writeAsCsv">1.2 writeAsCsv</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-print--printToErr">1.3 print  printToErr</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-writeUsingOutputFormat">1.4 writeUsingOutputFormat</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-writeToSocket">1.5 writeToSocket</a><br/>
+        <a href="#11-writeAsText">1.1 writeAsText</a><br/>
+        <a href="#12-writeAsCsv">1.2 writeAsCsv</a><br/>
+        <a href="#13-print--printToErr">1.3 print  printToErr</a><br/>
+        <a href="#14-writeUsingOutputFormat">1.4 writeUsingOutputFormat</a><br/>
+        <a href="#15-writeToSocket">1.5 writeToSocket</a><br/>
 <a href="#二Streaming-Connectors">二、Streaming Connectors</a><br/>
 <a href="#三整合-Kafka-Sink">三、整合 Kafka Sink</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-addSink">3.1 addSink</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-创建输出主题">3.2 创建输出主题</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-启动消费者">3.3 启动消费者</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#34-测试结果">3.4 测试结果</a><br/>
+        <a href="#31-addSink">3.1 addSink</a><br/>
+        <a href="#32-创建输出主题">3.2 创建输出主题</a><br/>
+        <a href="#33-启动消费者">3.3 启动消费者</a><br/>
+        <a href="#34-测试结果">3.4 测试结果</a><br/>
 <a href="#四自定义-Sink">四、自定义 Sink</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-导入依赖">4.1 导入依赖</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-自定义-Sink">4.2 自定义 Sink</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43-使用自定义-Sink">4.3 使用自定义 Sink</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-测试结果">4.4 测试结果</a><br/>
+        <a href="#41-导入依赖">4.1 导入依赖</a><br/>
+        <a href="#42-自定义-Sink">4.2 自定义 Sink</a><br/>
+        <a href="#43-使用自定义-Sink">4.3 使用自定义 Sink</a><br/>
+        <a href="#44-测试结果">4.4 测试结果</a><br/>
 </nav>
-
-
 
 ## 一、Data Sinks
 
@@ -27,7 +26,7 @@
 
 ### 1.1 writeAsText
 
-`writeAsText` 用于将计算结果以文本的方式并行地写入到指定文件夹下，除了路径参数是必选外，该方法还可以通过指定第二个参数来定义输出模式，它有以下两个可选值：
+`writeAsText`用于将计算结果以文本的方式并行地写入到指定文件夹下，除了路径参数是必选外，该方法还可以通过指定第二个参数来定义输出模式，它有以下两个可选值：
 
 + **WriteMode.NO_OVERWRITE**：当指定路径上不存在任何文件时，才执行写出操作；
 + **WriteMode.OVERWRITE**：不论指定路径上是否存在文件，都执行写出操作；如果原来已有文件，则进行覆盖。
@@ -76,8 +75,6 @@ public DataStreamSink<T> writeAsText(String path, WriteMode writeMode) {
 streamSource.writeToSocket("192.168.0.226", 9999, new SimpleStringSchema());
 ```
 
-
-
 ## 二、Streaming Connectors
 
 除了上述 API 外，Flink 中还内置了系列的 Connectors 连接器，用于将计算结果输入到常用的存储系统或者消息中间件中，具体如下：
@@ -99,8 +96,6 @@ streamSource.writeToSocket("192.168.0.226", 9999, new SimpleStringSchema());
 - Akka (sink)
 
 这里接着在 Data Sources 章节介绍的整合 Kafka Source 的基础上，将 Kafka Sink 也一并进行整合，具体步骤如下。
-
-
 
 ## 三、整合 Kafka Sink
 
@@ -253,7 +248,4 @@ env.execute();
 
 数据库成功写入，代表自定义 Sink 整合成功。
 
-> 以上所有用例的源码见本仓库：[flink-kafka-integration]( https://github.com/heibaiying/BigData-Notes/tree/master/code/Flink/flink-kafka-integration)
-
-
-
+> 以上所有用例的源码见本仓库：[flink-kafka-integration](https://github.com/heibaiying/BigData-Notes/tree/master/code/Flink/flink-kafka-integration)

@@ -296,7 +296,7 @@ DataSet<String> result = data1.union(data2);
 DataSet<String> in = // [...]
 DataSet<String> result = in.rebalance()
                            .map(new Mapper());
-                   
+             
 ```
 
 * Hash-Partition

@@ -1,4 +1,3 @@
-
 本章是学习kafka的核心章节，涵盖内容比较多，在理解上有一定的难度，需要反复阅读理解，才能参透Kafka的设计思想。
 
 ## **1、Kafka集群结构**
@@ -189,15 +188,13 @@ kafka通过轮询算法保证leader replica是均匀分布在多个broker上。�
 
 5、consumer也可以重置offset到之前的位置，可以以任何顺序消费，不一定线性后移。
 
-
 本章是理解kafka设计的核心，通过本章学习你应该理解如下知识点：
 
-*   producer
-*   consumer
-*   consumer group
-*   broker
-*   分区（partition）
-*   副本（replica）
-*   分区平衡
-*   消息读写
-
+* producer
+* consumer
+* consumer group
+* broker
+* 分区（partition）
+* 副本（replica）
+* 分区平衡
+* 消息读写

@@ -1,22 +1,22 @@
 # Flink 核心概念综述
+
 <nav>
 <a href="#一Flink-简介">一、Flink 简介</a><br/>
 <a href="#二Flink-核心架构">二、Flink 核心架构</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-API--Libraries-层">2.1 API & Libraries 层</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-Runtime-核心层">2.2 Runtime 核心层</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-物理部署层">2.3 物理部署层</a><br/>
+        <a href="#21-API--Libraries-层">2.1 API & Libraries 层</a><br/>
+        <a href="#22-Runtime-核心层">2.2 Runtime 核心层</a><br/>
+        <a href="#23-物理部署层">2.3 物理部署层</a><br/>
 <a href="#三Flink-分层-API">三、Flink 分层 API</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-SQL--Table-API">3.1 SQL & Table API</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-DataStream--DataSet-API">3.2 DataStream & DataSet API</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-Stateful-Stream-Processing">3.3 Stateful Stream Processing</a><br/>
+        <a href="#31-SQL--Table-API">3.1 SQL & Table API</a><br/>
+        <a href="#32-DataStream--DataSet-API">3.2 DataStream & DataSet API</a><br/>
+        <a href="#33-Stateful-Stream-Processing">3.3 Stateful Stream Processing</a><br/>
 <a href="#四Flink-集群架构">四、Flink 集群架构</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41--核心组件">4.1  核心组件</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42--Task--SubTask">4.2  Task & SubTask</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#43--资源管理">4.3  资源管理</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#44-组件通讯">4.4 组件通讯</a><br/>
+        <a href="#41--核心组件">4.1  核心组件</a><br/>
+        <a href="#42--Task--SubTask">4.2  Task & SubTask</a><br/>
+        <a href="#43--资源管理">4.3  资源管理</a><br/>
+        <a href="#44-组件通讯">4.4 组件通讯</a><br/>
 <a href="#五Flink-的优点">五、Flink 的优点</a><br/>
 </nav>
-
 
 ## 一、Flink 简介
 
@@ -28,20 +28,15 @@ Flink 有界数据流和无界数据流：
 
 ![img.png](resources/img.png)
 
-
-
 Spark Streaming 数据流的拆分：
 
 ![img_1.png](resources/img_1.png)
-
 
 ## 二、Flink 核心架构
 
 Flink 采用分层的架构设计，从而保证各层在功能和职责上的清晰。如下图所示，由上而下分别是 API & Libraries 层、Runtime 核心层以及物理部署层：
 
 ![img_2.png](resources/img_2.png)
-
-
 
 ### 2.1 API & Libraries 层
 
@@ -63,8 +58,6 @@ Flink 的物理部署层，用于支持在不同平台上部署运行 Flink 应�
 在上面介绍的 API & Libraries 这一层，Flink 又进行了更为具体的划分。具体如下：
 
 ![img_3.png](resources/img_3.png)
-
-
 
 按照如上的层次结构，API 的一致性由下至上依次递增，接口的表现能力由下至上依次递减，各层的核心功能如下：
 
@@ -109,30 +102,21 @@ Stateful Stream Processing 是最低级别的抽象，它通过 Process Function
 
 ![img_6.png](resources/img_6.png)
 
-
-
 这时每个 SubTask 线程运行在一个独立的 TaskSlot， 它们共享所属的 TaskManager 进程的TCP 连接（通过多路复用技术）和心跳信息 (heartbeat messages)，从而可以降低整体的性能开销。此时看似是最好的情况，但是每个操作需要的资源都是不尽相同的，这里假设该作业 keyBy 操作所需资源的数量比 Sink 多很多 ，那么此时 Sink 所在 Slot 的资源就没有得到有效的利用。
 
 基于这个原因，Flink 允许多个 subtasks 共享 slots，即使它们是不同 tasks 的 subtasks，但只要它们来自同一个 Job 就可以。假设上面 souce & map 和 keyBy 的并行度调整为 6，而 Slot 的数量不变，此时情况如下：
 
 ![img_7.png](resources/img_7.png)
 
-
-
 可以看到一个 Task Slot 中运行了多个 SubTask 子任务，此时每个子任务仍然在一个独立的线程中执行，只不过共享一组 Sot 资源而已。那么 Flink 到底如何确定一个 Job 至少需要多少个 Slot 呢？Flink 对于这个问题的处理很简单，默认情况一个 Job 所需要的 Slot 的数量就等于其 Operation 操作的最高并行度。如下， A，B，D 操作的并行度为 4，而 C，E 操作的并行度为 2，那么此时整个 Job 就需要至少四个 Slots 来完成。通过这个机制，Flink 就可以不必去关心一个 Job 到底会被拆分为多少个 Tasks 和 SubTasks。
 
 ![img_8.png](resources/img_8.png)
-
-
-
 
 ### 4.4 组件通讯
 
 Flink 的所有组件都基于 Actor System 来进行通讯。Actor system是多种角色的 actor 的容器，它提供调度，配置，日志记录等多种服务，并包含一个可以启动所有 actor 的线程池，如果 actor 是本地的，则消息通过共享内存进行共享，但如果 actor 是远程的，则通过 RPC 的调用来传递消息。
 
 ![img_9.png](resources/img_9.png)
-
-
 
 ## 五、Flink 的优点
 
@@ -146,7 +130,3 @@ Flink 的所有组件都基于 Actor System 来进行通讯。Actor system是多
 + 多样化的部署方式，支持本地，远端，云端等多种部署方案；
 + 具有横向扩展架构，能够按照用户的需求进行动态扩容；
 + 活跃度极高的社区和完善的生态圈的支持。
-
-
-
-

@@ -4,12 +4,11 @@
 <a href="#一生产者发送消息的过程">一、生产者发送消息的过程</a><br/>
 <a href="#二创建生产者">二、创建生产者</a><br/>
 <a href="#二发送消息">二、发送消息</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-同步发送">2.1 同步发送</a><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-异步发送">2.2 异步发送</a><br/>
+        <a href="#21-同步发送">2.1 同步发送</a><br/>
+        <a href="#22-异步发送">2.2 异步发送</a><br/>
 <a href="#三自定义分区器">三、自定义分区器</a><br/>
 <a href="#四生产者其他属性">四、生产者其他属性</a><br/>
 </nav>
-
 
 ## 一、生产者发送消息的过程
 
@@ -120,7 +119,6 @@ bin/kafka-topics.sh --create \
 
 ![img_5.png](resources/img_5.png)
 
-
 ### 2.4 可能出现的问题
 
 在这里可能出现的一个问题是：生产者程序在启动后，一直处于等待状态。这通常出现在你使用默认配置启动 Kafka 的情况下，此时需要对 `server.properties` 文件中的 `listeners` 配置进行更改：
@@ -129,8 +127,6 @@ bin/kafka-topics.sh --create \
 # hadoop001 为我启动kafka服务的主机名，你可以换成自己的主机名或者ip地址
 listeners=PLAINTEXT://hadoop001:9092
 ```
-
-
 
 ## 二、发送消息
 
@@ -190,8 +186,6 @@ for (int i = 0; i < 10; i++) {
     });
 }
 ```
-
-
 
 ## 三、自定义分区器
 
@@ -294,8 +288,6 @@ score:5, partition=0,
 分区器关闭
 ```
 
-
-
 ## 四、生产者其他属性
 
 上面生产者的创建都仅指定了服务地址，键序列化器、值序列化器，实际上 Kafka 的生产者还有很多可配置属性，如下：
@@ -353,7 +345,3 @@ acks 参数指定了必须要有多少个分区副本收到消息，生产者才
 ### 12. receive.buffer.bytes & send.buffer.byte
 
 这两个参数分别指定 TCP socket 接收和发送数据包缓冲区的大小，-1 代表使用操作系统的默认值。
-
-
-
-
